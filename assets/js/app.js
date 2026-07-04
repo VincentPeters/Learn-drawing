@@ -16,11 +16,11 @@
     1: { data: () => window.CURRICULUM, key: "draft30.progress.v1",
          tag: "Module 1", title: "Technical Drawing",
          sub: "The precise, correct line work that describes a real part.",
-         unit: "Day", short: "DAY", color: "#2c5f8a", kit: "2H · HB · 2B" },
+         unit: "Lesson", short: "Lesson", color: "#2c5f8a", kit: "2H · HB · 2B" },
     2: { data: () => window.MODULE2, key: "draft30.progress.m2",
          tag: "Module 2", title: "Rendering & Colour",
          sub: "Tone, light, hatching and the graphite + blue + sanguine palette.",
-         unit: "Lesson", short: "LSN", color: "#b5502f", kit: "＋ blue & sanguine" },
+         unit: "Lesson", short: "Lesson", color: "#b5502f", kit: "＋ blue & sanguine" },
   };
   const mod = (m) => MODULES[m] || null;
   const daysOf = (m) => (mod(m) && mod(m).data() ? mod(m).data().DAYS : []);
@@ -128,7 +128,7 @@
       grid.innerHTML = daysOf(1).map(d => {
         const ph = phasesOf(1)[d.phase];
         return `<a class="day-cell ${done[d.n] ? "done" : ""}" href="${href(1, d.n)}" style="--phase:${ph.color}">
-          <span class="dn">DAY ${String(d.n).padStart(2, "0")}</span>
+          <span class="dn">LESSON ${String(d.n).padStart(2, "0")}</span>
           <span class="dt">${d.title}</span>
           <span class="check">${I.check}</span></a>`;
       }).join("");
@@ -139,7 +139,7 @@
       ph.innerHTML = phasesOf(1).map((p, i) => {
         const chips = daysOf(1).filter(d => d.phase === i).map(d => `<span class="chip">${d.title}</span>`).join("");
         return `<div class="phase-row reveal" style="--phase:${p.color}">
-          <div class="phase-days">Days<span class="big">${p.days}</span></div>
+          <div class="phase-days">Lessons<span class="big">${p.days}</span></div>
           <div class="phase-body"><h3>${p.name}</h3><p>${p.blurb}</p><div class="phase-chips">${chips}</div></div></div>`;
       }).join("");
     }

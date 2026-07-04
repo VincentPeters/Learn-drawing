@@ -1,6 +1,6 @@
-# Learn Technical Drawing in 30 Days
+# Learn Technical Drawing in 30 Lessons
 
-A 30-day plan for learning **general technical and engineering drawing**, the kind
+A 30-lesson plan for learning **general technical and engineering drawing**, the kind
 used to describe real parts and machines. You learn it by hand before touching CAD,
 because working it out on paper is what makes it stick.
 
@@ -15,71 +15,71 @@ because working it out on paper is what makes it stick.
 - **Eraser:** kneaded + a fine click eraser
 - **Ruler:** for *checking* proportions only — **never** for drawing lines
 
-## Daily routine (45–90 min)
+## Per-lesson routine (45–90 min)
 
 - **10 min warm-up:** freehand straight lines and ellipses
-- **30–60 min:** the main exercise for the current day
+- **30–60 min:** the main exercise for the current lesson
 - **10 min:** hatching / lettering practice on scrap
 
 ---
 
-## Phase 1 · Foundations (Days 1–6)
+## Phase 1 · Foundations (Lessons 1–6)
 
 Instruments, the alphabet of lines, lettering, and basic geometric construction.
 This is the groundwork everything later depends on.
 
-- **Day 1 — Set up your drafting kit.** Two clean, distinct line weights by hand.
-- **Day 2 — The alphabet of lines.** Visible, hidden, center, dimension, cutting-plane, phantom, construction.
-- **Day 3 — Technical lettering.** Single-stroke gothic uppercase and numerals at constant height.
-- **Day 4 — Freehand line & ellipse control.** Ghosted lines, ellipses in boxes, ellipse funnels.
-- **Day 5 — Geometric construction I.** Bisect, perpendiculars, dividing a line into N parts.
-- **Day 6 — Geometric construction II.** Polygons, tangents, and fillets (arc-to-line blends).
+- **Lesson 1 — Set up your drafting kit.** Two clean, distinct line weights by hand.
+- **Lesson 2 — The alphabet of lines.** Visible, hidden, center, dimension, cutting-plane, phantom, construction.
+- **Lesson 3 — Technical lettering.** Single-stroke gothic uppercase and numerals at constant height.
+- **Lesson 4 — Freehand line & ellipse control.** Ghosted lines, ellipses in boxes, ellipse funnels.
+- **Lesson 5 — Geometric construction I.** Bisect, perpendiculars, dividing a line into N parts.
+- **Lesson 6 — Geometric construction II.** Polygons, tangents, and fillets (arc-to-line blends).
 
-## Phase 2 · Orthographic Projection (Days 7–13)
+## Phase 2 · Orthographic Projection (Lessons 7–13)
 
 The main engineering skill: showing a 3-D part as aligned front, top, and side
 views.
 
-- **Day 7 — Projection theory: the glass box.**
-- **Day 8 — Three-view drawings.** Align by projection; transfer depth with a 45° miter.
-- **Day 9 — First-angle vs third-angle.** Convert between conventions; add the symbol.
-- **Day 10 — Hidden detail & center lines.** Line precedence where lines overlap.
-- **Day 11 — Missing-view reasoning.** Reconstruct a third view from two.
-- **Day 12 — Sketch real objects to orthographic.** Measure, then proportion freehand.
-- **Day 13 — Orthographic review sheet.** One presentation-quality three-view drawing.
+- **Lesson 7 — Projection theory: the glass box.**
+- **Lesson 8 — Three-view drawings.** Align by projection; transfer depth with a 45° miter.
+- **Lesson 9 — First-angle vs third-angle.** Convert between conventions; add the symbol.
+- **Lesson 10 — Hidden detail & center lines.** Line precedence where lines overlap.
+- **Lesson 11 — Missing-view reasoning.** Reconstruct a third view from two.
+- **Lesson 12 — Sketch real objects to orthographic.** Measure, then proportion freehand.
+- **Lesson 13 — Orthographic review sheet.** One presentation-quality three-view drawing.
 
-## Phase 3 · Pictorial Views (Days 14–19)
+## Phase 3 · Pictorial Views (Lessons 14–19)
 
 Isometric, oblique, and perspective: ways to show a part in three dimensions on
 flat paper.
 
-- **Day 14 — Isometric fundamentals.** Box method on 30°/30°/vertical axes.
-- **Day 15 — Isometric circles & cylinders.** Ellipses oriented to each face.
-- **Day 16 — Oblique projection.** Cavalier vs cabinet; keep one face true-shape.
-- **Day 17 — One-point perspective.**
-- **Day 18 — Two-point perspective.**
-- **Day 19 — Pictorial review sheet.** One part in three pictorial systems.
+- **Lesson 14 — Isometric fundamentals.** Box method on 30°/30°/vertical axes.
+- **Lesson 15 — Isometric circles & cylinders.** Ellipses oriented to each face.
+- **Lesson 16 — Oblique projection.** Cavalier vs cabinet; keep one face true-shape.
+- **Lesson 17 — One-point perspective.**
+- **Lesson 18 — Two-point perspective.**
+- **Lesson 19 — Pictorial review sheet.** One part in three pictorial systems.
 
-## Phase 4 · Dimensioning & Sections (Days 20–25)
+## Phase 4 · Dimensioning & Sections (Lessons 20–25)
 
 Turn a shape into something a shop could actually make.
 
-- **Day 20 — Dimensioning fundamentals.** Size then locate; every feature once.
-- **Day 21 — Tolerances & fits.** Limits, plus/minus, clearance vs interference, one GD&T callout.
-- **Day 22 — Section views.** Cutting plane + 45° hatching of solid material.
-- **Day 23 — Section types.** Full, half, offset, broken-out, revolved.
-- **Day 24 — Auxiliary views.** True shape of an inclined surface.
-- **Day 25 — Threads, fasteners & conventions.** Simplified thread convention + notes.
+- **Lesson 20 — Dimensioning fundamentals.** Size then locate; every feature once.
+- **Lesson 21 — Tolerances & fits.** Limits, plus/minus, clearance vs interference, one GD&T callout.
+- **Lesson 22 — Section views.** Cutting plane + 45° hatching of solid material.
+- **Lesson 23 — Section types.** Full, half, offset, broken-out, revolved.
+- **Lesson 24 — Auxiliary views.** True shape of an inclined surface.
+- **Lesson 25 — Threads, fasteners & conventions.** Simplified thread convention + notes.
 
-## Phase 5 · Intersections & Sheets (Days 26–30)
+## Phase 5 · Intersections & Sheets (Lessons 26–30)
 
 The harder geometry, plus a finished drawing package.
 
-- **Day 26 — Intersections of solids.** Plot the pierce curve point by point.
-- **Day 27 — Surface developments.** Flat patterns; step off *true* lengths only.
-- **Day 28 — Assembly drawings & BOM.** Exploded view, balloons, parts list.
-- **Day 29 — The drawing sheet.** Border, zones, title block, scale.
-- **Day 30 — Capstone: a complete detail drawing.** Views + section + iso, fully dimensioned, timed (one sheet in 3 hours).
+- **Lesson 26 — Intersections of solids.** Plot the pierce curve point by point.
+- **Lesson 27 — Surface developments.** Flat patterns; step off *true* lengths only.
+- **Lesson 28 — Assembly drawings & BOM.** Exploded view, balloons, parts list.
+- **Lesson 29 — The drawing sheet.** Border, zones, title block, scale.
+- **Lesson 30 — Capstone: a complete detail drawing.** Views + section + iso, fully dimensioned, timed (one sheet in 3 hours).
 
 ---
 
@@ -112,7 +112,7 @@ The harder geometry, plus a finished drawing package.
 Module 1 built precise, correct line work. Module 2 adds the artisanal layer:
 tone, hatching that follows the form, one convincing light, and the graphite +
 blue + sanguine colour of the academic constructive-drawing tradition. Start it
-once you can construct a solid (roughly Module 1, Day 15).
+once you can construct a solid (roughly Module 1, Lesson 15).
 
 ## Phase A · Value & Hatching (Lessons 1–4)
 
