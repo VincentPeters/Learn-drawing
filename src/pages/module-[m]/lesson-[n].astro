@@ -1,0 +1,144 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Diagram from '../../components/Diagram.astro';
+import { MODULES, lessonUrl, moduleUrl } from '../../lib/modules';
+import { phasesOf, sequence, type SeqItem } from '../../lib/course';
+import { ICONS } from '../../lib/icons';
+
+export async function getStaticPaths() {
+  const seq = await sequence();
+  return seq.map((item, i) => ({
+    params: { m: String(item.m), n: String(item.n) },
+    props: {
+      entry: item.entry,
+      prev: seq[i - 1] ?? null,
+      next: seq[i + 1] ?? null,
+    },
+  }));
+}
+
+interface Props {
+  entry: SeqItem['entry'];
+  prev: SeqItem | null;
+  next: SeqItem | null;
+}
+const { entry, prev, next } = Astro.props;
+const d = entry.data;
+const m = d.module;
+const mm = MODULES[m];
+const phases = await phasesOf(m);
+const p = phases[d.phase].data;
+const total = (await sequence()).filter((s) => s.m === m).length;
+const num = String(d.number).padStart(2, '0');
+const { Content } = await render(entry);
+---
+<Base
+  title={`${mm.unit} ${d.number} · ${d.title} — Draft30`}
+  description={d.objective}
+  active={m === 1 ? 'm1' : 'm2'}
+>
+  <div class="wrap" style={`--phase:${p.color}`}>
+    <nav class="crumbs" id="crumbs">
+      <a href="/">Home</a><span class="sep">›</span>
+      <a href={moduleUrl(m)}>{mm.tag}</a><span class="sep">›</span>
+      <a href={`${moduleUrl(m)}#phase-${d.phase}`}>{p.name}</a><span class="sep">›</span>
+      <span class="here">{mm.unit} {d.number}</span>
+    </nav>
+
+    <article id="lesson" data-pagefind-body>
+      <header class="lesson-head">
+        <div class="lh-top">
+          <span class="lh-phase">{p.name} · Phase {d.phase + 1} of {phases.length}</span>
+          <span class="lh-count">{mm.unit} {d.number} / {total}</span>
+        </div>
+        <h1><span class="lh-num">{num}</span> {d.title}</h1>
+        <div class="lh-meta">
+          <span><Fragment set:html={ICONS.clock} /> 45–90 min</span>
+          <span><Fragment set:html={ICONS.pencil} /> {mm.kit}</span>
+          <span><Fragment set:html={ICONS.map} /> <a href={moduleUrl(m)}>{mm.title}</a></span>
+        </div>
+        <div class="lh-progress"><i style="width:0%"></i></div>
+      </header>
+
+      <div class="lesson-figure">
+        <Diagram name={d.diagram} />
+        <div class="fig-cap">Fig. {d.number} — {d.title}</div>
+      </div>
+
+      <div class="lesson-goal"><span class="g-label">Your goal</span>{d.objective}</div>
+
+      <section class="lesson-block warmup">
+        <h2><span class="lb-ico"><Fragment set:html={ICONS.flame} /></span> Warm-up <small>≈ 10 min</small></h2>
+        <ul>{d.warmup.map((w) => <li>{w}</li>)}</ul>
+      </section>
+
+      <section class="lesson-block">
+        <h2><span class="lb-ico"><Fragment set:html={ICONS.pencil} /></span> Main exercise <small>30–60 min</small></h2>
+        <ul>{d.main.map((w) => <li>{w}</li>)}</ul>
+      </section>
+
+      <div class="lesson-checkpoint">
+        <div class="lc-h"><Fragment set:html={ICONS.target} /> Checkpoint — how you know it's working</div>
+        <p>{d.checkpoint}</p>
+      </div>
+
+      <div class="lesson-tip"><b>Pro tip.</b> <Content /></div>
+
+      <div class="lesson-complete" id="complete-wrap" data-m={m} data-n={d.number} data-total={total}>
+        <button class="big-check" id="complete-btn"></button>
+      </div>
+
+      <nav class="lesson-nav" data-prev={prev?.url ?? ''} data-next={next?.url ?? ''}>
+        {prev
+          ? <a class="prev" href={prev.url}><span class="ln-dir">← Previous</span><span class="ln-title">{MODULES[prev.m].short} {prev.n} · {prev.title}</span></a>
+          : <a class="disabled"><span class="ln-dir">Start</span><span class="ln-title">You're at the beginning</span></a>}
+        {next
+          ? <a class="next" href={next.url}><span class="ln-dir">Next →</span><span class="ln-title">{MODULES[next.m].short} {next.n} · {next.title}</span></a>
+          : <div class="ln-end" style="text-align:right"><span class="ln-dir">The end</span><span class="ln-title">Course complete 🎉</span></div>}
+      </nav>
+      <a class="back-map" href={moduleUrl(m)}><Fragment set:html={ICONS.map} /> All {mm.unit.toLowerCase()}s in {mm.title}</a>
+    </article>
+  </div>
+</Base>
+
+<script>
+  import { isDone, setDone, doneCount } from '../../scripts/progress';
+  import { ICONS } from '../../lib/icons';
+
+  function initLesson() {
+    const wrap = document.getElementById('complete-wrap');
+    const btn = document.getElementById('complete-btn');
+    if (!wrap || !btn) return;
+    const m = Number(wrap.dataset.m);
+    const n = Number(wrap.dataset.n);
+    const total = Number(wrap.dataset.total);
+
+    const paint = () => {
+      const done = isDone(m, n);
+      wrap.classList.toggle('done', done);
+      btn.innerHTML = done
+        ? `${ICONS.check} Lesson ${n} complete`
+        : `${ICONS.circle} Mark Lesson ${n} complete`;
+      const bar = document.querySelector<HTMLElement>('.lh-progress > i');
+      if (bar) bar.style.width = `${Math.round((doneCount(m) / total) * 100)}%`;
+    };
+    paint();
+    btn.addEventListener('click', () => {
+      setDone(m, n, !isDone(m, n));
+      paint();
+    });
+  }
+
+  // Bound once; reads current DOM so it survives view transitions.
+  document.addEventListener('keydown', (e) => {
+    const t = e.target as HTMLElement;
+    if (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA') return;
+    const nav = document.querySelector<HTMLElement>('.lesson-nav');
+    if (!nav) return;
+    if (e.key === 'ArrowLeft' && nav.dataset.prev) location.href = nav.dataset.prev;
+    if (e.key === 'ArrowRight' && nav.dataset.next) location.href = nav.dataset.next;
+  });
+
+  document.addEventListener('astro:page-load', initLesson);
+</script>
