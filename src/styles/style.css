@@ -149,6 +149,14 @@ img, svg { max-width: 100%; }
 .theme-toggle:hover { color: var(--ink); border-color: var(--blue); }
 .theme-toggle svg { width: 18px; height: 18px; }
 
+.search-open {
+  border: 1px solid var(--line); background: var(--card);
+  color: var(--ink-soft); width: 36px; height: 36px; border-radius: 8px;
+  cursor: pointer; display: grid; place-items: center; padding: 0;
+}
+.search-open:hover { color: var(--ink); border-color: var(--blue); }
+.search-open svg { width: 18px; height: 18px; }
+
 .menu-btn { display: none; }
 
 @media (max-width: 760px) {
@@ -747,3 +755,9 @@ text.dg-lbl-accent { fill: var(--accent); font-size: 11px; font-family: var(--mo
   .reveal { opacity: 1; transform: none; transition: none; }
   html { scroll-behavior: auto; }
 }
+
+/* ---------- Search dialog ---------- */
+#search-dialog { border: 1px solid var(--line); border-radius: var(--radius); padding: 0; width: min(640px, 92vw); background: var(--paper); color: var(--ink); }
+#search-dialog::backdrop { background: rgb(0 0 0 / 0.45); }
+#search-dialog .search-box { padding: 16px; }
+#search-dialog .search-close { margin-top: 12px; }

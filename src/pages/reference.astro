@@ -1,0 +1,169 @@
+---
+import Base from '../layouts/Base.astro';
+import Diagram from '../components/Diagram.astro';
+import { moduleUrl } from '../lib/modules';
+---
+<Base
+  title="Reference — Draft30 · Technical Drawing Cheat Sheet"
+  description="A visual quick-reference for technical drawing: the alphabet of lines, orthographic projection, isometric, dimensioning, sections, intersections, and a glossary of terms."
+  active="reference"
+>
+  <div class="wrap" style="padding-top:36px;padding-bottom:40px" data-pagefind-body>
+    <div class="section-head" style="margin-bottom:32px">
+      <div class="kicker">Quick reference</div>
+      <h2>The technical drawing cheat sheet</h2>
+      <p>Both modules, condensed into diagrams you can glance at mid-drawing. Drafting conventions first, then the rendering and colour of Module 2. Bookmark this page.</p>
+    </div>
+
+    <div class="ref-grid">
+      <div class="ref-card reveal">
+        <h3>The alphabet of lines</h3>
+        <p>Every line on a drawing means something specific, set by its style and weight. Learn to read and draw all seven.</p>
+        <div class="ref-figrow">
+          <div class="ref-fig"><Diagram name="line-types" /></div>
+          <div class="ref-fig"><Diagram name="line-weights" /></div>
+        </div>
+      </div>
+
+      <div class="ref-card reveal">
+        <h3>Orthographic projection</h3>
+        <p>The core of engineering drawing: unfold the "glass box" so a 3-D part becomes aligned 2-D views. Front, top, and right are usually enough.</p>
+        <div class="ref-figrow">
+          <div class="ref-fig"><Diagram name="glass-box" /></div>
+          <div class="ref-fig"><Diagram name="three-views" /></div>
+        </div>
+      </div>
+
+      <div class="ref-card reveal">
+        <h3>First angle vs third angle</h3>
+        <p>Two conventions for where the views land. The symbol in the title block tells the reader which one you used.</p>
+        <div class="ref-figrow single">
+          <div class="ref-fig"><Diagram name="angle-symbol" /></div>
+        </div>
+      </div>
+
+      <div class="ref-card reveal">
+        <h3>Pictorial views</h3>
+        <p>Show depth on flat paper. Isometric keeps true lengths on three axes; the isometric circle is a leaning ellipse.</p>
+        <div class="ref-figrow">
+          <div class="ref-fig"><Diagram name="isometric-axes" /></div>
+          <div class="ref-fig"><Diagram name="iso-ellipse" /></div>
+        </div>
+        <div class="ref-figrow" style="margin-top:20px">
+          <div class="ref-fig"><Diagram name="one-point" /></div>
+          <div class="ref-fig"><Diagram name="two-point" /></div>
+        </div>
+      </div>
+
+      <div class="ref-card reveal">
+        <h3>Dimensioning &amp; sections</h3>
+        <p>Turn a shape into a spec. Dimension every feature once; cut the part open to show what's inside and hatch the solid material.</p>
+        <div class="ref-figrow">
+          <div class="ref-fig"><Diagram name="dimensioning" /></div>
+          <div class="ref-fig"><Diagram name="section-view" /></div>
+        </div>
+      </div>
+
+      <div class="ref-card reveal">
+        <h3>Auxiliary views &amp; threads</h3>
+        <p>Look straight at a slanted face to get its true shape; use standard shorthand for threads and tapped holes.</p>
+        <div class="ref-figrow">
+          <div class="ref-fig"><Diagram name="auxiliary" /></div>
+          <div class="ref-fig"><Diagram name="threads" /></div>
+        </div>
+      </div>
+
+      <div class="ref-card reveal">
+        <h3>Intersections &amp; developments</h3>
+        <p>Plot the curve where two solids meet, then unfold a surface into the flat pattern a shop would cut.</p>
+        <div class="ref-figrow">
+          <div class="ref-fig"><Diagram name="intersection" /></div>
+          <div class="ref-fig"><Diagram name="development" /></div>
+        </div>
+      </div>
+
+      <div class="ref-card reveal">
+        <h3>Assemblies &amp; the sheet</h3>
+        <p>Show how parts fit with balloons and a BOM, then package it on a bordered sheet with a proper title block.</p>
+        <div class="ref-figrow">
+          <div class="ref-fig"><Diagram name="assembly" /></div>
+          <div class="ref-fig"><Diagram name="title-block" /></div>
+        </div>
+      </div>
+
+      <div class="ref-card reveal">
+        <h3>Value &amp; hatching <span style="font-family:var(--mono);font-size:.7rem;color:var(--accent);vertical-align:middle">MODULE 2</span></h3>
+        <p>Turn line into tone. Build an even value scale, and let the stroke direction describe the surface it sits on.</p>
+        <div class="ref-figrow">
+          <div class="ref-fig"><Diagram name="value-scale" /></div>
+          <div class="ref-fig"><Diagram name="hatch-form" /></div>
+        </div>
+      </div>
+
+      <div class="ref-card reveal">
+        <h3>Light &amp; shadow <span style="font-family:var(--mono);font-size:.7rem;color:var(--accent);vertical-align:middle">MODULE 2</span></h3>
+        <p>One light source gives every solid the same six readable zones, and casts a shadow you can construct by projection.</p>
+        <div class="ref-figrow">
+          <div class="ref-fig"><Diagram name="light-logic" /></div>
+          <div class="ref-fig"><Diagram name="cast-shadow" /></div>
+        </div>
+        <div class="ref-figrow" style="margin-top:20px">
+          <div class="ref-fig"><Diagram name="primitives-shaded" /></div>
+          <div class="ref-fig"><Diagram name="crosshatch" /></div>
+        </div>
+      </div>
+
+      <div class="ref-card reveal">
+        <h3>Colour &amp; finish <span style="font-family:var(--mono);font-size:.7rem;color:var(--accent);vertical-align:middle">MODULE 2</span></h3>
+        <p>Graphite carries the structure; blue and sanguine carry temperature and focus. Edges and texture do the finishing.</p>
+        <div class="ref-figrow">
+          <div class="ref-fig"><Diagram name="color-system" /></div>
+          <div class="ref-fig"><Diagram name="temperature" /></div>
+        </div>
+        <div class="ref-figrow" style="margin-top:20px">
+          <div class="ref-fig"><Diagram name="edges" /></div>
+          <div class="ref-fig"><Diagram name="finished-plate" /></div>
+        </div>
+      </div>
+
+      <div class="ref-card reveal">
+        <h3>Glossary</h3>
+        <p>The terms you'll meet across both modules.</p>
+        <dl class="glossary">
+          <dt>Orthographic projection</dt><dd>Representing an object with parallel projectors perpendicular to the picture plane, giving true-shape views.</dd>
+          <dt>First / third angle</dt><dd>Two ISO conventions for arranging projected views; indicated by a truncated-cone symbol.</dd>
+          <dt>Isometric</dt><dd>A pictorial with axes at 120° apart where all three principal directions share one scale.</dd>
+          <dt>Oblique</dt><dd>A pictorial keeping one face true-shape with depth receding at an angle (cavalier = full, cabinet = half).</dd>
+          <dt>Hidden line</dt><dd>A dashed line showing an edge concealed behind material.</dd>
+          <dt>Center line</dt><dd>A thin long-short line marking axes of symmetry and hole centers.</dd>
+          <dt>Section view</dt><dd>A view of the part as if cut by a plane, with cut solid material hatched.</dd>
+          <dt>Cutting-plane line</dt><dd>The heavy line showing where a section is taken, with arrows for the viewing direction.</dd>
+          <dt>Auxiliary view</dt><dd>A view projected onto a plane parallel to an inclined surface to show its true shape.</dd>
+          <dt>Dimension line</dt><dd>A thin line with arrowheads carrying a measurement between extension lines.</dd>
+          <dt>Tolerance</dt><dd>The total permissible variation of a dimension.</dd>
+          <dt>Fit</dt><dd>The relationship (clearance, transition, interference) between mating parts.</dd>
+          <dt>GD&amp;T</dt><dd>Geometric Dimensioning &amp; Tolerancing — a symbolic system for form, orientation, and position.</dd>
+          <dt>Intersection</dt><dd>The curve produced where the surfaces of two solids meet.</dd>
+          <dt>Development</dt><dd>The unfolded, flat pattern of a 3-D surface used for fabrication.</dd>
+          <dt>Title block</dt><dd>The boxed area holding title, scale, material, author, and projection symbol.</dd>
+          <dt>Scale</dt><dd>The ratio of drawn size to real size (e.g. 1:2); dimensions always state the real value.</dd>
+          <dt>BOM</dt><dd>Bill of materials — the itemized parts list keyed to assembly balloons.</dd>
+          <dt>Value</dt><dd>The lightness or darkness of a tone, independent of colour.</dd>
+          <dt>Hatching</dt><dd>Parallel strokes used to build tone; their direction can describe the surface.</dd>
+          <dt>Cross-hatching</dt><dd>Layers of hatching set at differing angles to deepen tone.</dd>
+          <dt>Terminator</dt><dd>The line on a form where light turns into shadow.</dd>
+          <dt>Core shadow</dt><dd>The darkest band of a form's own shadow, just inside the terminator.</dd>
+          <dt>Reflected light</dt><dd>Light bouncing back into the shadow, lifting the far rim of a form.</dd>
+          <dt>Cast shadow</dt><dd>The shadow an object throws onto another surface.</dd>
+          <dt>Occlusion</dt><dd>The darkest darks where two surfaces nearly meet.</dd>
+          <dt>Sanguine</dt><dd>A warm red-brown drawing pencil, traditional in academic study.</dd>
+          <dt>Temperature</dt><dd>The warmth or coolness of a tone; warm advances, cool recedes.</dd>
+        </dl>
+      </div>
+    </div>
+
+    <div class="center mt-lg">
+      <a href={moduleUrl(1)} class="btn btn-primary">Back to the course map</a>
+    </div>
+  </div>
+</Base>

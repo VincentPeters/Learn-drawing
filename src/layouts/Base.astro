@@ -1,5 +1,6 @@
 ---
 import { ClientRouter } from 'astro:transitions';
+import Search from 'astro-pagefind/components/Search.astro';
 import '../styles/style.css';
 import { lessonUrl, moduleUrl } from '../lib/modules';
 
@@ -42,6 +43,9 @@ const { title, description, active } = Astro.props;
           <a href={moduleUrl(1)} class:list={[{ active: active === 'm1' }]}>Module 1</a>
           <a href={moduleUrl(2)} class:list={[{ active: active === 'm2' }]}>Module 2</a>
           <a href="/reference/" class:list={[{ active: active === 'reference' }]}>Reference</a>
+          <button class="search-open" aria-label="Search the course">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          </button>
           <a href={lessonUrl(1, 1)} class="nav-cta btn btn-primary" style="padding:7px 14px">Start Lesson 1</a>
           <button class="theme-toggle" aria-label="Toggle theme"></button>
         </div>
@@ -68,8 +72,22 @@ const { title, description, active } = Astro.props;
         </div>
       </div>
     </footer>
+    <dialog id="search-dialog">
+      <div class="search-box">
+        <Search instance="site-search" className="pagefind-ui" />
+        <button class="search-close btn btn-ghost">Close</button>
+      </div>
+    </dialog>
     <script>
       import '../scripts/enhance';
+
+      document.addEventListener('click', (e) => {
+        const t = e.target as Element;
+        const dialog = document.getElementById('search-dialog') as HTMLDialogElement | null;
+        if (!dialog) return;
+        if (t.closest?.('.search-open')) dialog.showModal();
+        if (t.closest?.('.search-close') || t === dialog) dialog.close();
+      });
     </script>
   </body>
 </html>
