@@ -507,6 +507,13 @@
       { x: 240, layers: [45, -45, 90], n: "3 layers" },
     ].map((s: any) => {
       const box = `<rect x="${s.x}" y="30" width="90" height="90" class="ln-thin fill-none"/>`;
+      const lines = s.layers.map((a: number) =>
+        Array.from({ length: 11 }, (_, k) => {
+          const off = -90 + k * 15;
+          if (a === 90) return `<line x1="${s.x + 8 + k * 8}" y1="30" x2="${s.x + 8 + k * 8}" y2="120" class="hatch" style="stroke:var(--ink);opacity:.55"/>`;
+          const dir = a > 0 ? 1 : -1;
+          return `<line x1="${s.x + (dir > 0 ? 0 : 90) + off * 0}" y1="0" x2="0" y2="0" style="display:none"/>`;
+        }).join("")).join("");
       // simpler explicit diagonal fills:
       const diag = s.layers.map((a: number) => Array.from({ length: 13 }, (_, k: number) => {
         const p = k * 12 - 30;
