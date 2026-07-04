@@ -16,11 +16,14 @@ The course is in **two modules**:
 
 | Page | Purpose |
 | --- | --- |
-| `index.html` | Landing page — the two modules, the five phases, the 30-day roadmap grid, tools & routine. |
-| `curriculum.html` | **Module 1**: the full day-by-day program with objectives, warm-ups, exercises, checkpoints, per-day diagrams, and **progress tracking** (saved in your browser). |
-| `module2.html` | **Module 2**: 15 rendering & colour lessons, same daily format, with its own separate progress. |
+| `index.html` | Landing page — *continue where you left off*, the two modules, how a session works, the five phases, the whole-journey roadmap, tools & routine. |
+| `course.html?m=1\|2` | **Course map** for a module: phases as sections, each day a card with its goal, completion state, and a highlighted *start here / continue*. Per-phase and overall progress. |
+| `lesson.html?m=<n>&d=<n>` | **One page per day/lesson**: breadcrumb, goal, timed warm-up / main / checkpoint blocks, pro tip, *mark complete*, and prev/next that flow across the whole course (← / → keys). |
 | `reference.html` | A visual cheat-sheet for both modules: line alphabet, orthographic, isometric, dimensioning, sections, plus value, light, and colour — and a glossary. |
+| `curriculum.html`, `module2.html` | Redirect stubs → `course.html?m=1` / `?m=2` (kept so old links keep working). |
 | `PLAN.md` | The written plan for both modules in plain Markdown. |
+
+Each day is its own URL but rendered from a single data-driven template, so **adding or editing a day means editing only the data file** — never the HTML.
 
 ### Assets
 
@@ -30,7 +33,8 @@ assets/
   js/diagrams.js       ~30 hand-authored, theme-aware SVG diagrams (both modules)
   js/curriculum.js     Module 1 data — 5 phases, 30 days
   js/module2.js        Module 2 data — 4 phases, 15 lessons
-  js/app.js            Theme, per-module progress tracking, rendering, reveal-on-scroll
+  js/app.js            Data-driven router + renderers: course map, per-day lesson
+                       pages, global prev/next, per-module progress, theme
 ```
 
 ## Module 1 at a glance (30 days)
