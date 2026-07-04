@@ -1,0 +1,83 @@
+[
+  {
+    "id": "m1-p0",
+    "module": 1,
+    "index": 0,
+    "name": "Foundations",
+    "color": "#2c5f8a",
+    "blurb": "Instruments, the alphabet of lines, lettering, and basic geometric construction. This is the groundwork everything later depends on.",
+    "lessons": "1–6"
+  },
+  {
+    "id": "m1-p1",
+    "module": 1,
+    "index": 1,
+    "name": "Orthographic Projection",
+    "color": "#b5502f",
+    "blurb": "The main engineering skill: showing a 3-D part as aligned front, top, and side views.",
+    "lessons": "7–13"
+  },
+  {
+    "id": "m1-p2",
+    "module": 1,
+    "index": 2,
+    "name": "Pictorial Views",
+    "color": "#3f7d54",
+    "blurb": "Isometric, oblique, and perspective: ways to show a part in three dimensions on flat paper.",
+    "lessons": "14–19"
+  },
+  {
+    "id": "m1-p3",
+    "module": 1,
+    "index": 3,
+    "name": "Dimensioning & Sections",
+    "color": "#7a4fb5",
+    "blurb": "Turn a shape into something a shop could actually make: dimensions, tolerances, sections, auxiliary views, and threads.",
+    "lessons": "20–25"
+  },
+  {
+    "id": "m1-p4",
+    "module": 1,
+    "index": 4,
+    "name": "Intersections & Sheets",
+    "color": "#b58a2c",
+    "blurb": "The harder geometry, plus a finished drawing package: intersections, developments, assemblies, and a capstone sheet.",
+    "lessons": "26–30"
+  },
+  {
+    "id": "m2-p0",
+    "module": 2,
+    "index": 0,
+    "name": "Value & Hatching",
+    "color": "#2c5f8a",
+    "blurb": "Turn line into tone. Build a clean value scale and learn to hatch along the surface so the strokes describe the form.",
+    "lessons": "1–4"
+  },
+  {
+    "id": "m2-p1",
+    "module": 2,
+    "index": 1,
+    "name": "Light & Form",
+    "color": "#b5502f",
+    "blurb": "Make the solids feel solid. Read one light source and place highlight, core shadow, reflected light, and cast shadow where they belong.",
+    "lessons": "5–8"
+  },
+  {
+    "id": "m2-p2",
+    "module": 2,
+    "index": 2,
+    "name": "Colour",
+    "color": "#3f7d54",
+    "blurb": "The graphite-plus-two-accents palette from your reference plate. Layer blue and sanguine over graphite to model warmth, depth, and focus.",
+    "lessons": "9–12"
+  },
+  {
+    "id": "m2-p3",
+    "module": 2,
+    "index": 3,
+    "name": "Finish & Craft",
+    "color": "#b58a2c",
+    "blurb": "The details that separate a study from a plate: edge control, texture, and a full finished composition.",
+    "lessons": "13–15"
+  }
+]
