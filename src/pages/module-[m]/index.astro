@@ -1,0 +1,127 @@
+---
+import Base from '../../layouts/Base.astro';
+import { MODULES, lessonUrl, moduleUrl } from '../../lib/modules';
+import { lessonsOf, phasesOf } from '../../lib/course';
+import { ICONS } from '../../lib/icons';
+
+export function getStaticPaths() {
+  return [{ params: { m: '1' } }, { params: { m: '2' } }];
+}
+
+const m = Number(Astro.params.m) as 1 | 2;
+const mm = MODULES[m];
+const other = MODULES[m === 1 ? 2 : 1];
+const lessons = await lessonsOf(m);
+const phases = await phasesOf(m);
+---
+<Base title={`${mm.tag} · ${mm.title} — Draft30`} description={mm.sub} active={m === 1 ? 'm1' : 'm2'}>
+  <div class="wrap">
+    <nav class="crumbs" id="crumbs">
+      <a href="/">Home</a><span class="sep">›</span>
+      <span class="here">{mm.tag} · {mm.title}</span>
+    </nav>
+
+    <header class="course-head" id="course-head" style={`--phase:${mm.color}`}>
+      <div class="course-head-main">
+        <div class="eyebrow">{mm.tag}</div>
+        <h1>{mm.title}</h1>
+        <p>{mm.sub}</p>
+      </div>
+      <div class="course-progress" data-m={m} data-total={lessons.length}>
+        <div class="cp-pct" id="cp-pct">0%</div>
+        <div class="cp-lbl"><span id="cp-cnt">0 of {lessons.length}</span> {mm.unit.toLowerCase()}s complete</div>
+        <div class="bar"><i style="width:0%"></i></div>
+        <a class="btn btn-primary" id="continue-btn" data-unit={mm.unit} href={lessonUrl(m, 1)}>Continue <Fragment set:html={ICONS.arrow} /></a>
+      </div>
+    </header>
+
+    <div id="phase-list">
+      {phases.map((ph, pi) => {
+        const inPhase = lessons.filter((l) => l.data.phase === pi);
+        return (
+          <section class="phase-group" style={`--phase:${ph.data.color}`} id={`phase-${pi}`}>
+            <div class="phase-group-head">
+              <span class="pg-ix">Phase {pi + 1}</span>
+              <h2>{ph.data.name}</h2>
+              <span class="pg-count" data-phase={pi}>0/{inPhase.length} done</span>
+              <p class="pg-blurb">{ph.data.blurb}</p>
+            </div>
+            <div class="lesson-grid">
+              {inPhase.map((l) => (
+                <a class="lesson-card" href={lessonUrl(m, l.data.number)} style={`--phase:${ph.data.color}`} data-m={m} data-n={l.data.number}>
+                  <span class="lc-top"><span class="lc-num">{String(l.data.number).padStart(2, '0')}</span><span class="lc-state"><Fragment set:html={ICONS.circle} /></span></span>
+                  <span class="lc-title">{l.data.title}</span>
+                  <span class="lc-obj">{l.data.objective}</span>
+                </a>
+              ))}
+            </div>
+          </section>
+        );
+      })}
+    </div>
+
+    <div class="module-switch" id="module-switch">
+      <div class="ms-text">{m === 1 ? "Finished the drawing? Add the artisan's layer." : 'Want to revisit the fundamentals?'} <b>{other.tag}: {other.title}</b></div>
+      <a href={moduleUrl(other.m)} class="btn btn-ghost">Go to {other.tag} <Fragment set:html={ICONS.arrow} /></a>
+    </div>
+  </div>
+</Base>
+
+<script>
+  import { load } from '../../scripts/progress';
+  import { ICONS } from '../../lib/icons';
+
+  function paintCourse() {
+    const head = document.querySelector<HTMLElement>('.course-progress');
+    if (!head) return;
+    const m = Number(head.dataset.m);
+    const total = Number(head.dataset.total);
+    const done = load(m);
+
+    const cards = Array.from(document.querySelectorAll<HTMLAnchorElement>('.lesson-card'));
+    let next: HTMLAnchorElement | null = null;
+    for (const card of cards) {
+      const n = Number(card.dataset.n);
+      const isDone = Boolean(done[n]);
+      card.classList.toggle('done', isDone);
+      card.classList.remove('next');
+      const state = card.querySelector('.lc-state')!;
+      if (isDone) state.innerHTML = `${ICONS.check} done`;
+      else state.innerHTML = ICONS.circle;
+      if (!isDone && !next) next = card;
+    }
+    if (next) {
+      next.classList.add('next');
+      next.querySelector('.lc-state')!.innerHTML = 'start here';
+    }
+
+    const doneCount = cards.filter((c) => done[Number(c.dataset.n)]).length;
+    const pct = total ? Math.round((doneCount / total) * 100) : 0;
+    document.getElementById('cp-pct')!.textContent = `${pct}%`;
+    document.getElementById('cp-cnt')!.textContent = `${doneCount} of ${total}`;
+    const bar = document.querySelector<HTMLElement>('.course-progress .bar > i');
+    if (bar) bar.style.width = `${pct}%`;
+
+    document.querySelectorAll<HTMLElement>('.pg-count').forEach((el) => {
+      const pi = el.dataset.phase;
+      const section = document.getElementById(`phase-${pi}`);
+      const inPhase = Array.from(section?.querySelectorAll<HTMLElement>('.lesson-card') ?? []);
+      const d = inPhase.filter((c) => done[Number(c.dataset.n)]).length;
+      el.textContent = `${d}/${inPhase.length} done`;
+    });
+
+    const btn = document.getElementById('continue-btn') as HTMLAnchorElement | null;
+    if (btn) {
+      const unit = btn.dataset.unit ?? 'Lesson';
+      if (next) {
+        btn.href = next.href;
+        btn.innerHTML = `Continue · ${unit} ${next.dataset.n} ${ICONS.arrow}`;
+      } else {
+        btn.innerHTML = `Review from ${unit} 1 ${ICONS.arrow}`;
+      }
+    }
+  }
+
+  document.addEventListener('astro:page-load', paintCourse);
+  document.addEventListener('progresschange', paintCourse);
+</script>
