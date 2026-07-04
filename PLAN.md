@@ -1,11 +1,11 @@
 # Learn Technical Drawing in 30 Days
 
-A 30-day program for **general technical & engineering drawing** — the visual
-language of parts, machines, and products. Pencil and paper first; the
-fundamentals live in your hand and eye before any CAD.
+A 30-day plan for learning **general technical and engineering drawing**, the kind
+used to describe real parts and machines. You learn it by hand before touching CAD,
+because working it out on paper is what makes it stick.
 
-> **The one rule:** consistency beats duration. Six short sessions a week beat one
-> long weekend session.
+> **If you do one thing right, do this:** practice often, even briefly. Six short
+> sessions a week will get you further than one long weekend push.
 
 ## Tools
 
@@ -25,8 +25,8 @@ fundamentals live in your hand and eye before any CAD.
 
 ## Phase 1 · Foundations (Days 1–6)
 
-Instruments, the alphabet of lines, lettering, and geometric construction — the
-grammar every later drawing is written in.
+Instruments, the alphabet of lines, lettering, and basic geometric construction.
+This is the groundwork everything later depends on.
 
 - **Day 1 — Set up your drafting kit.** Two clean, distinct line weights by hand.
 - **Day 2 — The alphabet of lines.** Visible, hidden, center, dimension, cutting-plane, phantom, construction.
@@ -37,8 +37,8 @@ grammar every later drawing is written in.
 
 ## Phase 2 · Orthographic Projection (Days 7–13)
 
-The core engineering skill: representing a 3-D part with aligned front, top, and
-side views.
+The main engineering skill: showing a 3-D part as aligned front, top, and side
+views.
 
 - **Day 7 — Projection theory: the glass box.**
 - **Day 8 — Three-view drawings.** Align by projection; transfer depth with a 45° miter.
@@ -50,8 +50,8 @@ side views.
 
 ## Phase 3 · Pictorial Views (Days 14–19)
 
-Isometric, oblique, and perspective — showing a part in three dimensions on flat
-paper.
+Isometric, oblique, and perspective: ways to show a part in three dimensions on
+flat paper.
 
 - **Day 14 — Isometric fundamentals.** Box method on 30°/30°/vertical axes.
 - **Day 15 — Isometric circles & cylinders.** Ellipses oriented to each face.
@@ -62,7 +62,7 @@ paper.
 
 ## Phase 4 · Dimensioning & Sections (Days 20–25)
 
-Turn a shape into a buildable spec.
+Turn a shape into something a shop could actually make.
 
 - **Day 20 — Dimensioning fundamentals.** Size then locate; every feature once.
 - **Day 21 — Tolerances & fits.** Limits, plus/minus, clearance vs interference, one GD&T callout.
@@ -73,7 +73,7 @@ Turn a shape into a buildable spec.
 
 ## Phase 5 · Intersections & Sheets (Days 26–30)
 
-Advanced geometry and a finished drawing package.
+The harder geometry, plus a finished drawing package.
 
 - **Day 26 — Intersections of solids.** Plot the pierce curve point by point.
 - **Day 27 — Surface developments.** Flat patterns; step off *true* lengths only.

@@ -10,19 +10,19 @@
   const PHASES = [
     { id: "foundations", name: "Foundations", days: "1–6",
       color: "#2c5f8a",
-      blurb: "Instruments, the alphabet of lines, lettering, and geometric construction — the grammar every later drawing is written in." },
+      blurb: "Instruments, the alphabet of lines, lettering, and basic geometric construction. This is the groundwork everything later depends on." },
     { id: "orthographic", name: "Orthographic Projection", days: "7–13",
       color: "#b5502f",
-      blurb: "The core engineering skill: representing a 3-D part with aligned front, top, and side views." },
+      blurb: "The main engineering skill: showing a 3-D part as aligned front, top, and side views." },
     { id: "pictorials", name: "Pictorial Views", days: "14–19",
       color: "#3f7d54",
-      blurb: "Isometric, oblique, and perspective — showing a part in three dimensions on flat paper." },
+      blurb: "Isometric, oblique, and perspective: ways to show a part in three dimensions on flat paper." },
     { id: "documentation", name: "Dimensioning & Sections", days: "20–25",
       color: "#7a4fb5",
-      blurb: "Turn a shape into a buildable spec: dimensions, tolerances, section views, auxiliary views, and threads." },
+      blurb: "Turn a shape into something a shop could actually make: dimensions, tolerances, sections, auxiliary views, and threads." },
     { id: "assemblies", name: "Intersections & Sheets", days: "26–30",
       color: "#b58a2c",
-      blurb: "Advanced geometry and a finished drawing package: intersections, developments, assemblies, and a capstone sheet." },
+      blurb: "The harder geometry, plus a finished drawing package: intersections, developments, assemblies, and a capstone sheet." },
   ];
 
   const DAYS = [
@@ -38,7 +38,7 @@
         "Draw the same small rectangle three times, each time thickening only the visible outline against thin construction.",
       ],
       checkpoint: "You can produce a bold outline and a crisp thin line on demand, without switching to a ruler for straightness.",
-      tip: "Two weights carry 90% of engineering drawing legibility: <b>thick for what the object is, thin for what you're saying about it.</b>",
+      tip: "Most of what makes a drawing readable comes down to two line weights: <b>thick for the object itself, thin for everything you're saying about it.</b>",
     },
     {
       n: 2, phase: 0, title: "The alphabet of lines",
@@ -51,7 +51,7 @@
         "Label each line you drew with its name and typical use.",
       ],
       checkpoint: "Given any line on a real drawing, you can name it and state what it means.",
-      tip: "Hidden dashes start and stop touching the visible line; center lines cross exactly at hole centers. Precision here reads as competence.",
+      tip: "Hidden dashes should start and stop touching the visible line, and center lines should cross right at the hole center. Getting these small things right is most of what makes a drawing look professional.",
     },
     {
       n: 3, phase: 0, title: "Technical lettering",
@@ -77,7 +77,7 @@
         "Ellipse funnel: one long axis, ellipses of growing width, minor axis kept aligned.",
       ],
       checkpoint: "You can draw a 20 cm line straight and an ellipse with no correction strokes.",
-      tip: "Everything later — cylinders, holes, isometric circles — is an ellipse. Time here pays back tenfold.",
+      tip: "Almost everything you draw later (cylinders, holes, isometric circles) comes down to an ellipse, so time spent here is never wasted.",
     },
     {
       n: 5, phase: 0, title: "Geometric construction I",
@@ -90,7 +90,7 @@
         "Divide a line into 7 equal parts with the inclined-line method.",
       ],
       checkpoint: "You can halve any angle and split any segment into N equal parts without measuring.",
-      tip: "These moves are the atoms of every hexagon, gear, and bolt circle you'll construct later.",
+      tip: "You'll reuse these same moves in every hexagon, gear, and bolt circle you construct later.",
     },
     {
       n: 6, phase: 0, title: "Geometric construction II — polygons & tangents",
@@ -144,7 +144,7 @@
         "Add the correct projection symbol to each title block.",
       ],
       checkpoint: "You can convert a drawing between first- and third-angle and pick the right symbol.",
-      tip: "Third angle: the view is on the same side as you look from. First angle: the object casts its view to the opposite side. The symbol tells the reader which world they're in.",
+      tip: "Third angle: the view sits on the same side you're looking from. First angle: the object throws its view to the opposite side. The symbol in the title block tells the reader which convention you used.",
     },
     {
       n: 10, phase: 1, title: "Hidden detail & center lines",
@@ -423,7 +423,7 @@
         "Fully dimension and tolerance it; complete the title block. Target: one sheet in 3 hours.",
       ],
       checkpoint: "A standalone drawing another person could manufacture from, unaided — your Draft30 milestone.",
-      tip: "Entrance exams and real jobs run on this clock. Block in first, commit line weights last. Then do it again next week — consistency is the whole game.",
+      tip: "Real jobs and entrance exams both run on a clock like this. Block in lightly first, commit your line weights last, and then do the whole thing again next week. Repetition is what turns it into a skill.",
     },
   ];
 
