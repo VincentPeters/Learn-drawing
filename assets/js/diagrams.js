@@ -449,5 +449,296 @@
     <text x="14" y="24" class="dg-lbl">capstone: multiple solids, one light, cast shadows</text>
   `);
 
+  /* ======================================================================
+     MODULE 2 — Rendering, shading & colour
+     Tone uses currentColor gradients/opacity so it inverts with the theme
+     (dark ink on paper in light mode, light ink on dark in blueprint mode).
+     ====================================================================== */
+
+  /* ---- Value scale (density builds tone) ------------------------------- */
+  D["value-scale"] = svg("0 0 380 150", `
+    ${Array.from({ length: 6 }, (_, i) => {
+      const x = 20 + i * 58, n = i * 5;
+      const cell = `<rect x="${x}" y="26" width="50" height="70" class="ln-thin fill-none"/>`;
+      const hatch = Array.from({ length: n }, (_, j) =>
+        `<line x1="${x + 2}" y1="${29 + j * (64 / Math.max(n, 1))}" x2="${x + 48}" y2="${29 + j * (64 / Math.max(n, 1))}" class="hatch" style="stroke:var(--ink);opacity:.9"/>`).join("");
+      return cell + hatch + `<text x="${x + 17}" y="112" class="dg-lbl">${i === 0 ? "0" : i * 2}</text>`;
+    }).join("")}
+    <text x="20" y="16" class="dg-lbl-blue">Value scale — build tone by density, not by pressure</text>
+  `);
+
+  /* ---- Hatching that follows the form ---------------------------------- */
+  D["hatch-form"] = svg("0 0 380 220", `
+    <!-- cylinder: vertical strokes, denser toward the shadow side -->
+    <g>
+      <ellipse cx="90" cy="45" rx="50" ry="15" class="ln-visible fill-paper"/>
+      <line x1="40" y1="45" x2="40" y2="175" class="ln-visible"/>
+      <line x1="140" y1="45" x2="140" y2="175" class="ln-visible"/>
+      <path d="M40,175 a50,15 0 0 0 100,0" class="ln-visible fill-none"/>
+      ${Array.from({ length: 24 }, (_, i) => {
+        const x = 43 + i * 4;
+        const r = (x - 40) / 100;                 // 0 lit … 1 shadow
+        const op = (0.10 + Math.pow(r, 1.6) * 0.8).toFixed(2);
+        const t = Math.max(0, 1 - Math.pow((x - 90) / 50, 2));
+        const y0 = (45 + 15 * Math.sqrt(t)).toFixed(1);
+        return `<line x1="${x}" y1="${y0}" x2="${x}" y2="175" class="hatch" style="stroke:var(--ink);opacity:${op}"/>`;
+      }).join("")}
+      <text x="40" y="200" class="dg-lbl">vertical on the wall</text>
+    </g>
+    <!-- cone: strokes radiate from the apex -->
+    <g>
+      <path d="M300,35 L245,175 L355,175 Z" class="ln-visible fill-none"/>
+      <path d="M245,175 a55,15 0 0 0 110,0" class="ln-visible fill-none"/>
+      <ellipse cx="300" cy="175" rx="55" ry="15" class="ln-hidden fill-none"/>
+      ${Array.from({ length: 17 }, (_, i) => {
+        const bx = 248 + i * 6.5;
+        const r = (bx - 245) / 110;
+        const op = (0.10 + Math.pow(r, 1.5) * 0.8).toFixed(2);
+        return `<line x1="300" y1="37" x2="${bx.toFixed(1)}" y2="174" class="hatch" style="stroke:var(--ink);opacity:${op}"/>`;
+      }).join("")}
+      <text x="256" y="200" class="dg-lbl">radiating on the cone</text>
+    </g>
+    <text x="20" y="18" class="dg-lbl-blue">Strokes follow the surface; tone comes from density</text>
+  `);
+
+  /* ---- Cross-hatching in layers ---------------------------------------- */
+  D["crosshatch"] = svg("0 0 360 170", `
+    ${[
+      { x: 20, layers: [45] , n: "1 layer" },
+      { x: 130, layers: [45, -45], n: "2 layers" },
+      { x: 240, layers: [45, -45, 90], n: "3 layers" },
+    ].map(s => {
+      const box = `<rect x="${s.x}" y="30" width="90" height="90" class="ln-thin fill-none"/>`;
+      const lines = s.layers.map(a =>
+        Array.from({ length: 11 }, (_, k) => {
+          const off = -90 + k * 15;
+          if (a === 90) return `<line x1="${s.x + 8 + k * 8}" y1="30" x2="${s.x + 8 + k * 8}" y2="120" class="hatch" style="stroke:var(--ink);opacity:.55"/>`;
+          const dir = a > 0 ? 1 : -1;
+          return `<line x1="${s.x + (dir > 0 ? 0 : 90) + off * 0}" y1="0" x2="0" y2="0" style="display:none"/>`;
+        }).join("")).join("");
+      // simpler explicit diagonal fills:
+      const diag = s.layers.map(a => Array.from({ length: 13 }, (_, k) => {
+        const p = k * 12 - 30;
+        if (a === 90) return `<line x1="${s.x + 6 + k * 7}" y1="32" x2="${s.x + 6 + k * 7}" y2="118" class="hatch" style="stroke:var(--ink);opacity:.5"/>`;
+        if (a > 0) return `<line x1="${s.x + p}" y1="120" x2="${s.x + p + 90}" y2="30" class="hatch" style="stroke:var(--ink);opacity:.55"/>`;
+        return `<line x1="${s.x + p}" y1="30" x2="${s.x + p + 90}" y2="120" class="hatch" style="stroke:var(--ink);opacity:.55"/>`;
+      }).join("")).join("");
+      return box + `<clipPath id="cx${s.x}"><rect x="${s.x}" y="30" width="90" height="90"/></clipPath><g clip-path="url(#cx${s.x})">${diag}</g><text x="${s.x + 8}" y="140" class="dg-lbl">${s.n}</text>`;
+    }).join("")}
+    <text x="20" y="18" class="dg-lbl-blue">Each layer at a new angle deepens the tone</text>
+  `);
+
+  /* ---- Light logic on a sphere ----------------------------------------- */
+  D["light-logic"] = svg("0 0 420 280", `
+    <defs>
+      <radialGradient id="llS" cx="37%" cy="33%" r="75%">
+        <stop offset="0%" stop-color="currentColor" stop-opacity="0"/>
+        <stop offset="52%" stop-color="currentColor" stop-opacity="0.10"/>
+        <stop offset="80%" stop-color="currentColor" stop-opacity="0.52"/>
+        <stop offset="92%" stop-color="currentColor" stop-opacity="0.26"/>
+        <stop offset="100%" stop-color="currentColor" stop-opacity="0.40"/>
+      </radialGradient>
+    </defs>
+    <ellipse cx="185" cy="222" rx="105" ry="22" fill="currentColor" opacity="0.15"/>
+    <ellipse cx="120" cy="212" rx="22" ry="9" fill="currentColor" opacity="0.28"/>
+    <circle cx="150" cy="120" r="82" fill="url(#llS)"/>
+    <circle cx="150" cy="120" r="82" class="ln-visible fill-none"/>
+    <ellipse cx="120" cy="88" rx="11" ry="8" class="fill-paper"/>
+    ${[
+      ["highlight", 120, 82, 250, 60],
+      ["mid-tone", 150, 120, 250, 105],
+      ["core shadow", 196, 168, 300, 150],
+      ["reflected light", 205, 190, 320, 200],
+      ["cast shadow", 250, 225, 330, 240],
+      ["occlusion", 120, 212, 108, 258],
+    ].map(([t, x, y, lx, ly]) => `
+      <line x1="${x}" y1="${y}" x2="${lx}" y2="${ly}" class="ln-thin" style="opacity:.6"/>
+      <circle cx="${x}" cy="${y}" r="2.4" class="fill-accent"/>
+      <text x="${lx > 200 ? lx + 4 : lx - 4}" y="${ly + 3}" class="dg-lbl-ink" style="text-anchor:${lx > 200 ? "start" : "end"}">${t}</text>
+    `).join("")}
+    <text x="20" y="20" class="dg-lbl-blue">One light source → six readable zones of tone</text>
+  `);
+
+  /* ---- The primitives, shaded ------------------------------------------ */
+  D["primitives-shaded"] = svg("0 0 420 180", `
+    <defs>
+      <radialGradient id="psS" cx="38%" cy="34%" r="72%">
+        <stop offset="0%" stop-color="currentColor" stop-opacity="0"/>
+        <stop offset="78%" stop-color="currentColor" stop-opacity="0.5"/>
+        <stop offset="90%" stop-color="currentColor" stop-opacity="0.22"/>
+        <stop offset="100%" stop-color="currentColor" stop-opacity="0.4"/>
+      </radialGradient>
+      <linearGradient id="psC" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="currentColor" stop-opacity="0.05"/>
+        <stop offset="45%" stop-color="currentColor" stop-opacity="0"/>
+        <stop offset="80%" stop-color="currentColor" stop-opacity="0.5"/>
+        <stop offset="100%" stop-color="currentColor" stop-opacity="0.28"/>
+      </linearGradient>
+    </defs>
+    <!-- sphere -->
+    <ellipse cx="55" cy="130" rx="40" ry="9" fill="currentColor" opacity=".14"/>
+    <circle cx="50" cy="70" r="42" fill="url(#psS)"/>
+    <circle cx="50" cy="70" r="42" class="ln-visible fill-none"/>
+    <text x="30" y="150" class="dg-lbl">sphere</text>
+    <!-- cylinder -->
+    <ellipse cx="160" cy="128" rx="42" ry="9" fill="currentColor" opacity=".14"/>
+    <rect x="135" y="42" width="50" height="80" fill="url(#psC)"/>
+    <ellipse cx="160" cy="42" rx="25" ry="8" class="ln-visible fill-paper"/>
+    <line x1="135" y1="42" x2="135" y2="122" class="ln-visible"/>
+    <line x1="185" y1="42" x2="185" y2="122" class="ln-visible"/>
+    <path d="M135,122 a25,8 0 0 0 50,0" class="ln-visible fill-none"/>
+    <text x="140" y="150" class="dg-lbl">cylinder</text>
+    <!-- cone -->
+    <ellipse cx="270" cy="128" rx="42" ry="9" fill="currentColor" opacity=".14"/>
+    <path d="M270,38 L245,122 L295,122 Z" fill="url(#psC)"/>
+    <path d="M270,38 L245,122 L295,122 Z" class="ln-visible fill-none"/>
+    <path d="M245,122 a25,8 0 0 0 50,0" class="ln-visible fill-none"/>
+    <text x="252" y="150" class="dg-lbl">cone</text>
+    <!-- cube -->
+    <ellipse cx="375" cy="128" rx="44" ry="9" fill="currentColor" opacity=".14"/>
+    <path d="M350,50 L390,50 L390,120 L350,120 Z" fill="currentColor" opacity=".05"/>
+    <path d="M390,50 L410,40 L410,108 L390,120 Z" fill="currentColor" opacity=".45"/>
+    <path d="M350,50 L370,40 L410,40 L390,50 Z" fill="currentColor" opacity=".16"/>
+    <path d="M350,50 L390,50 L390,120 L350,120 Z M390,50 L410,40 L410,108 L390,120 M350,50 L370,40 L410,40" class="ln-visible fill-none"/>
+    <text x="358" y="150" class="dg-lbl">cube</text>
+    <text x="20" y="20" class="dg-lbl-blue">Where each tone falls on the four basic solids</text>
+  `);
+
+  /* ---- Cast shadow construction ---------------------------------------- */
+  D["cast-shadow"] = svg("0 0 400 250", `
+    <line x1="20" y1="185" x2="380" y2="185" class="ln-center"/>
+    <!-- light source -->
+    <circle cx="60" cy="40" r="12" class="ln-accent fill-none"/>
+    ${Array.from({ length: 8 }, (_, i) => { const a = i * 45 * Math.PI / 180; return `<line x1="${60 + 16 * Math.cos(a)}" y1="${40 + 16 * Math.sin(a)}" x2="${60 + 22 * Math.cos(a)}" y2="${40 + 22 * Math.sin(a)}" class="ln-accent"/>`; }).join("")}
+    <text x="44" y="78" class="dg-lbl-accent">light</text>
+    <!-- box -->
+    <rect x="150" y="115" width="70" height="70" class="ln-visible fill-paper"/>
+    <path d="M150,115 L172,98 L242,98 L220,115 Z" class="ln-visible fill-paper" opacity=".85"/>
+    <path d="M220,115 L242,98 L242,168 L220,185 Z" class="ln-visible fill-paper" opacity=".7"/>
+    <!-- shadow projected from light through top corners to ground -->
+    <path d="M60,40 L172,98 L295,185" class="ln-constr"/>
+    <path d="M60,40 L242,98 L360,167" class="ln-constr"/>
+    <path d="M150,185 L295,185 L360,167 L242,168 L220,185 Z" fill="currentColor" opacity=".18"/>
+    <text x="270" y="205" class="dg-lbl">cast shadow</text>
+    <text x="20" y="20" class="dg-lbl-blue">Project rays from the light through each top edge</text>
+  `);
+
+  /* ---- The colour system ----------------------------------------------- */
+  D["color-system"] = svg("0 0 400 200", `
+    ${[
+      ["graphite", "var(--ink)", 30],
+      ["blue (cool / shadow)", "var(--blue)", 150],
+      ["sanguine (warm / light)", "var(--accent)", 270],
+    ].map(([t, col, x]) => `
+      <rect x="${x}" y="30" width="90" height="52" class="ln-thin fill-none"/>
+      ${Array.from({ length: 16 }, (_, j) => `<line x1="${x + 3}" y1="${33 + j * 3}" x2="${x + 87}" y2="${33 + j * 3}" style="stroke:${col};stroke-width:1.4;opacity:${(0.2 + j * 0.05).toFixed(2)}"/>`).join("")}
+      <text x="${x}" y="98" class="dg-lbl">${t}</text>
+    `).join("")}
+    <!-- layered sphere: graphite base, blue in shadow, sanguine near light -->
+    <circle cx="200" cy="155" r="34" fill="var(--ink)" opacity=".12"/>
+    <path d="M200,121 a34,34 0 0 1 24,58 a34,34 0 0 0 -24,-58" fill="var(--blue)" opacity=".28"/>
+    <ellipse cx="188" cy="140" rx="12" ry="9" fill="var(--accent)" opacity=".3"/>
+    <circle cx="200" cy="155" r="34" class="ln-visible fill-none"/>
+    <text x="30" y="18" class="dg-lbl-blue">Graphite base + two accents = the whole palette</text>
+  `);
+
+  /* ---- Temperature (warm / cool) --------------------------------------- */
+  D["temperature"] = svg("0 0 360 210", `
+    <ellipse cx="180" cy="180" rx="70" ry="14" fill="currentColor" opacity=".12"/>
+    <rect x="120" y="55" width="120" height="110" fill="var(--accent)" opacity=".16"/>
+    <rect x="196" y="55" width="44" height="110" fill="var(--blue)" opacity=".22"/>
+    <ellipse cx="180" cy="55" rx="60" ry="16" class="ln-visible fill-paper"/>
+    <line x1="120" y1="55" x2="120" y2="165" class="ln-visible"/>
+    <line x1="240" y1="55" x2="240" y2="165" class="ln-visible"/>
+    <path d="M120,165 a60,16 0 0 0 120,0" class="ln-visible fill-none"/>
+    <text x="122" y="115" class="dg-lbl-accent">warm · lit / near</text>
+    <text x="250" y="115" class="dg-lbl-blue">cool · shadow</text>
+    <text x="20" y="20" class="dg-lbl-blue">Warm accents advance, cool accents recede</text>
+  `);
+
+  /* ---- Selective colour (focal emphasis) ------------------------------- */
+  D["selective-color"] = svg("0 0 400 230", `
+    <line x1="20" y1="175" x2="380" y2="175" class="ln-center"/>
+    <!-- graphite cube (background) -->
+    <path d="M60,175 L60,120 L95,105 L95,160 Z" class="ln-visible fill-none"/>
+    <path d="M60,120 L95,105 L130,120 L95,135 Z" class="ln-visible fill-none"/>
+    <path d="M95,160 L95,105 L130,120 L130,175 Z" class="ln-visible" fill="currentColor" fill-opacity=".08"/>
+    <!-- sanguine cone (focal, warm) -->
+    <path d="M195,60 L165,175 L225,175 Z" class="ln-visible" fill="var(--accent)" fill-opacity=".26"/>
+    <path d="M165,175 a30,9 0 0 0 60,0" class="ln-visible fill-none"/>
+    <!-- blue cylinder (accent) -->
+    <ellipse cx="300" cy="95" rx="34" ry="11" class="ln-visible" fill="var(--blue)" fill-opacity=".12"/>
+    <rect x="266" y="95" width="68" height="80" fill="var(--blue)" fill-opacity=".22"/>
+    <line x1="266" y1="95" x2="266" y2="175" class="ln-visible"/>
+    <line x1="334" y1="95" x2="334" y2="175" class="ln-visible"/>
+    <path d="M266,175 a34,11 0 0 0 68,0" class="ln-visible fill-none"/>
+    <text x="20" y="20" class="dg-lbl-blue">Colour the focal solids; leave the rest in graphite</text>
+  `);
+
+  /* ---- Edges: line weight & lost/found --------------------------------- */
+  D["edges"] = svg("0 0 380 200", `
+    <!-- cube: near edges heavy, receding edges light -->
+    <path d="M60,170 L60,90 L110,65 L110,145 Z" fill="currentColor" fill-opacity=".05"/>
+    <path d="M60,90 L110,65 L160,90 L110,115 Z" class="ln-thin fill-none"/>
+    <path d="M110,145 L110,65 L160,90 L160,170 Z" class="ln-thin fill-none" style="opacity:.5"/>
+    <path d="M60,170 L60,90 L110,115 L110,145 Z" class="fill-none" style="stroke:var(--ink);stroke-width:3;stroke-linejoin:round"/>
+    <line x1="110" y1="145" x2="110" y2="115" class="fill-none" style="stroke:var(--ink);stroke-width:3"/>
+    <text x="40" y="192" class="dg-lbl">near edges heavy, far edges light</text>
+    <!-- lost & found on a rounded form -->
+    <path d="M250,60 a50,60 0 1 0 0.1,0" class="fill-none" style="stroke:var(--ink);stroke-width:2.6;stroke-dasharray:120 40 60 30;stroke-dashoffset:10"/>
+    <ellipse cx="250" cy="120" rx="50" ry="60" fill="currentColor" fill-opacity=".06"/>
+    <text x="210" y="192" class="dg-lbl">lost &amp; found edges</text>
+    <text x="20" y="20" class="dg-lbl-blue">Edge weight shows what is near and what turns away</text>
+  `);
+
+  /* ---- Texture swatches ------------------------------------------------ */
+  D["texture"] = svg("0 0 380 160", `
+    <!-- metal: high contrast streaks -->
+    <rect x="20" y="30" width="90" height="80" class="ln-thin fill-none"/>
+    <rect x="20" y="30" width="90" height="80" fill="currentColor" fill-opacity=".08"/>
+    ${[6, 20, 26, 40, 58, 64, 78].map((y, i) => `<rect x="20" y="${30 + y}" width="90" height="${i % 3 === 0 ? 6 : 2}" fill="currentColor" fill-opacity="${i % 2 ? 0.5 : 0.18}"/>`).join("")}
+    <rect x="20" y="46" width="90" height="4" class="fill-paper"/>
+    <text x="20" y="128" class="dg-lbl">metal</text>
+    <!-- matte: even gradient -->
+    <rect x="145" y="30" width="90" height="80" class="ln-thin fill-none"/>
+    ${Array.from({ length: 26 }, (_, j) => `<line x1="147" y1="${32 + j * 3}" x2="233" y2="${32 + j * 3}" class="hatch" style="stroke:var(--ink);opacity:${(0.15 + j * 0.02).toFixed(2)}"/>`).join("")}
+    <text x="145" y="128" class="dg-lbl">matte</text>
+    <!-- wood: grain -->
+    <rect x="270" y="30" width="90" height="80" class="ln-thin fill-none"/>
+    ${Array.from({ length: 7 }, (_, j) => `<path d="M270,${36 + j * 11} q45,${j % 2 ? 6 : -6} 90,0" class="hatch fill-none" style="stroke:var(--accent);opacity:.5"/>`).join("")}
+    <text x="270" y="128" class="dg-lbl">wood grain</text>
+    <text x="20" y="20" class="dg-lbl-blue">Surface reads through stroke pattern and contrast</text>
+  `);
+
+  /* ---- The finished plate (Module 2 capstone) -------------------------- */
+  D["finished-plate"] = svg("0 0 420 300", `
+    <defs>
+      <linearGradient id="fpC" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="currentColor" stop-opacity=".04"/>
+        <stop offset="50%" stop-color="currentColor" stop-opacity="0"/>
+        <stop offset="100%" stop-color="currentColor" stop-opacity=".45"/>
+      </linearGradient>
+    </defs>
+    <line x1="10" y1="215" x2="410" y2="215" class="ln-center"/>
+    <!-- cone through cylinder, blue accent -->
+    <ellipse cx="150" cy="215" rx="120" ry="26" fill="currentColor" opacity=".12"/>
+    <rect x="108" y="120" width="84" height="95" fill="url(#fpC)"/>
+    <rect x="108" y="120" width="84" height="95" fill="var(--blue)" fill-opacity=".16"/>
+    <ellipse cx="150" cy="120" rx="42" ry="13" class="ln-visible fill-paper"/>
+    <line x1="108" y1="120" x2="108" y2="215" class="ln-visible"/>
+    <line x1="192" y1="120" x2="192" y2="215" class="ln-visible"/>
+    <path d="M108,215 a42,13 0 0 0 84,0" class="ln-visible fill-none"/>
+    <path d="M150,45 L104,150 L196,150 Z" class="ln-visible fill-none"/>
+    <path d="M150,45 L196,150" style="stroke:var(--accent);stroke-width:1.4;opacity:.6" fill="none"/>
+    ${Array.from({ length: 10 }, (_, i) => `<line x1="150" y1="47" x2="${106 + i * 9.4}" y2="149" class="hatch" style="stroke:var(--ink);opacity:${(0.08 + i * 0.05).toFixed(2)}"/>`).join("")}
+    <!-- intersection curve (plotted) -->
+    <path d="M150,133 C138,138 138,146 150,150" style="stroke:var(--accent);stroke-width:2" fill="none"/>
+    <!-- sanguine pyramid -->
+    <path d="M320,70 L270,215 L370,215 Z" class="ln-visible" fill="var(--accent)" fill-opacity=".2"/>
+    <path d="M320,70 L340,205" style="stroke:var(--ink);stroke-width:1;opacity:.4" fill="none"/>
+    ${Array.from({ length: 9 }, (_, i) => `<line x1="320" y1="72" x2="${300 + i * 8}" y2="214" class="hatch" style="stroke:var(--ink);opacity:${(0.06 + i * 0.05).toFixed(2)}"/>`).join("")}
+    <text x="20" y="24" class="dg-lbl-blue">The plate: construction, hatching, shading, colour</text>
+  `);
+
   global.DIAGRAMS = D;
 })(window);

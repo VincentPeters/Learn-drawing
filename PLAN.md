@@ -104,3 +104,51 @@ The harder geometry, plus a finished drawing package.
 - *Engineering Drawing and Design* — Madsen
 - *Perspective Made Easy* — Ernest Norling (short, cheap, clear)
 - *How to Draw* — Scott Robertson (heavier; great after Phase 3)
+
+---
+
+# Module 2 — Rendering, Shading & Colour (15 lessons)
+
+Module 1 built precise, correct line work. Module 2 adds the artisanal layer:
+tone, hatching that follows the form, one convincing light, and the graphite +
+blue + sanguine colour of the academic constructive-drawing tradition. Start it
+once you can construct a solid (roughly Module 1, Day 15).
+
+## Phase A · Value & Hatching (Lessons 1–4)
+
+- **Lesson 1 — The value scale.** An even graphite scale; density beats pressure.
+- **Lesson 2 — Hatching along the form.** Vertical on cylinders, radiating on cones, wrapping on spheres.
+- **Lesson 3 — Cross-hatching & building tone.** Layers at changing angles; rich darks without mud.
+- **Lesson 4 — The drawn look vs. blending.** When to keep the stroke visible and when to smooth it.
+
+## Phase B · Light & Form (Lessons 5–8)
+
+- **Lesson 5 — Reading the light.** Highlight, mid-tone, core shadow, reflected light, cast shadow, occlusion.
+- **Lesson 6 — Shading the primitives.** One light across sphere, cylinder, cone, cube.
+- **Lesson 7 — Cast shadows.** Project the shadow from the light direction.
+- **Lesson 8 — Contact & occlusion.** The darkest darks where forms meet the ground and each other.
+
+## Phase C · Colour (Lessons 9–12)
+
+- **Lesson 9 — The graphite + accent system.** Why blue and sanguine over a graphite base.
+- **Lesson 10 — Layering coloured pencil.** Light passes over graphite, following the hatch direction.
+- **Lesson 11 — Warm & cool temperature.** Sanguine advances, blue recedes; model form with temperature.
+- **Lesson 12 — Selective colour & focus.** Colour the focal solids, leave the rest graphite.
+
+## Phase D · Finish & Craft (Lessons 13–15)
+
+- **Lesson 13 — Edge control & line weight.** Near-heavy/far-light; lost-and-found edges.
+- **Lesson 14 — Texture & surface.** Metal, matte, and wood through stroke and contrast.
+- **Lesson 15 — The finished plate.** Intersecting solids, hatched, shaded, and coloured — the reference plate, made yours.
+
+## Module 2 progress markers
+
+- **End of Phase A:** an even value scale and hatching that reads as the surface it sits on.
+- **End of Phase B:** the four primitives convincingly lit by one shared light, grounded by shadow.
+- **End of Phase C:** form modelled with the two-accent palette without losing the graphite structure.
+- **End of Phase D:** a finished plate that stands beside the academic reference in structure, tone, and colour.
+
+## Module 2 tools
+
+- Everything from Module 1, plus **coloured pencils**: a blue and a sanguine or terracotta.
+- Optional: a blending stump, and a white or cream pencil for the brightest accents.

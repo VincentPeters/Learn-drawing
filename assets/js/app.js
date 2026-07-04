@@ -1,14 +1,26 @@
 /* ==========================================================================
    Draft30 — application logic
    Theme, progress (localStorage), roadmap + curriculum rendering, reveal.
+   Drives Module 1 (curriculum) or Module 2 (rendering) from one codebase,
+   chosen per page via <body data-module="2">. Progress is stored per module.
    ========================================================================== */
 (function () {
   "use strict";
 
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
-  const PROGRESS_KEY = "draft30.progress.v1";
   const THEME_KEY = "draft30.theme";
+
+  // Active module config, resolved at boot -------------------------------
+  let ACTIVE = null;
+  function resolveActive() {
+    const m = document.body.getAttribute("data-module");
+    if (m === "2" && window.MODULE2) {
+      return { data: window.MODULE2, key: "draft30.progress.m2", page: "module2.html", label: "Lesson", short: "LSN" };
+    }
+    const meta = (window.CURRICULUM && window.CURRICULUM.META) || {};
+    return { data: window.CURRICULUM, key: "draft30.progress.v1", page: "curriculum.html", label: meta.unitLabel || "Day", short: meta.unitShort || "DAY" };
+  }
 
   /* ---------- icons ---------- */
   const ICON = {
@@ -42,13 +54,12 @@
     });
   }
 
-  /* ---------- progress store ---------- */
-  function loadProgress() {
-    try { return JSON.parse(localStorage.getItem(PROGRESS_KEY)) || {}; }
+  /* ---------- progress store (per active module) ---------- */
+  function loadProgress(key) {
+    try { return JSON.parse(localStorage.getItem(key || ACTIVE.key)) || {}; }
     catch (e) { return {}; }
   }
-  function saveProgress(p) { localStorage.setItem(PROGRESS_KEY, JSON.stringify(p)); }
-  function isDone(n) { return !!loadProgress()[n]; }
+  function saveProgress(p) { localStorage.setItem(ACTIVE.key, JSON.stringify(p)); }
   function setDone(n, v) {
     const p = loadProgress();
     if (v) p[n] = 1; else delete p[n];
@@ -68,27 +79,33 @@
     els.forEach(e => io.observe(e));
   }
 
-  /* ---------- roadmap grid (index page) ---------- */
+  /* ---------- roadmap grid ---------- */
   function renderRoadmap() {
     const grid = $("#roadmap");
-    if (!grid || !window.CURRICULUM) return;
-    const { DAYS, PHASES } = window.CURRICULUM;
-    const done = loadProgress();
+    if (!grid) return;
+    // a roadmap may target a module other than the page's active one
+    const src = grid.getAttribute("data-source");
+    const cfg = src === "module2"
+      ? { data: window.MODULE2, key: "draft30.progress.m2", page: "module2.html", short: "LSN" }
+      : { data: window.CURRICULUM, key: "draft30.progress.v1", page: "curriculum.html", short: "DAY" };
+    if (!cfg.data) return;
+    const { DAYS, PHASES } = cfg.data;
+    const done = loadProgress(cfg.key);
     grid.innerHTML = DAYS.map(d => {
       const ph = PHASES[d.phase];
-      return `<a class="day-cell ${done[d.n] ? "done" : ""}" href="curriculum.html#day-${d.n}" style="--phase:${ph.color}">
-        <span class="dn">DAY ${String(d.n).padStart(2, "0")}</span>
+      return `<a class="day-cell ${done[d.n] ? "done" : ""}" href="${cfg.page}#day-${d.n}" style="--phase:${ph.color}">
+        <span class="dn">${cfg.short} ${String(d.n).padStart(2, "0")}</span>
         <span class="dt">${d.title}</span>
         <span class="check">${ICON.check}</span>
       </a>`;
     }).join("");
   }
 
-  /* ---------- curriculum page ---------- */
+  /* ---------- curriculum / lessons page ---------- */
   function renderCurriculum() {
     const host = $("#days");
-    if (!host || !window.CURRICULUM || !window.DIAGRAMS) return;
-    const { DAYS, PHASES } = window.CURRICULUM;
+    if (!host || !ACTIVE.data || !window.DIAGRAMS) return;
+    const { DAYS, PHASES } = ACTIVE.data;
 
     host.innerHTML = DAYS.map(d => {
       const ph = PHASES[d.phase];
@@ -96,7 +113,7 @@
       const list = (items, cls) => `<ul class="day-list ${cls || ""}">${items.map(i => `<li>${i}</li>`).join("")}</ul>`;
       return `<article class="day reveal" id="day-${d.n}" data-day="${d.n}" style="--phase:${ph.color}">
         <header class="day-header">
-          <div class="day-num">${String(d.n).padStart(2, "0")}<small>DAY</small></div>
+          <div class="day-num">${String(d.n).padStart(2, "0")}<small>${ACTIVE.short}</small></div>
           <div class="day-title">
             <div class="ph-tag">${ph.name}</div>
             <h3>${d.title}</h3>
@@ -132,7 +149,7 @@
       PHASES.forEach((ph, pi) => {
         html += `<li class="ph" style="--phase:${ph.color}">${ph.name}</li>`;
         DAYS.filter(d => d.phase === pi).forEach(d => {
-          html += `<li><a href="#day-${d.n}">Day ${d.n} · ${d.title}</a></li>`;
+          html += `<li><a href="#day-${d.n}">${ACTIVE.label} ${d.n} · ${d.title}</a></li>`;
         });
       });
       side.innerHTML = html;
@@ -156,17 +173,17 @@
 
   function updateProgressBox() {
     const box = $("#progress-box");
-    if (!box || !window.CURRICULUM) return;
-    const total = window.CURRICULUM.DAYS.length;
+    if (!box || !ACTIVE.data) return;
+    const total = ACTIVE.data.DAYS.length;
     const done = Object.keys(loadProgress()).length;
     const pct = Math.round((done / total) * 100);
     const pctEl = $(".pct", box), barEl = $(".bar > i", box), cntEl = $(".cnt", box);
     if (pctEl) pctEl.textContent = pct + "%";
     if (barEl) barEl.style.width = pct + "%";
-    if (cntEl) cntEl.textContent = `${done} of ${total} days complete`;
+    if (cntEl) cntEl.textContent = `${done} of ${total} ${ACTIVE.label.toLowerCase()}s complete`;
   }
 
-  /* ---------- reference page ---------- */
+  /* ---------- reference figures ---------- */
   function renderReferenceFigures() {
     if (!window.DIAGRAMS) return;
     $$("[data-diagram]").forEach(el => {
@@ -189,8 +206,8 @@
     const btn = $("#reset-progress");
     if (!btn) return;
     btn.addEventListener("click", () => {
-      if (confirm("Reset all progress? This clears every completed day.")) {
-        localStorage.removeItem(PROGRESS_KEY);
+      if (confirm("Reset all progress for this module?")) {
+        localStorage.removeItem(ACTIVE.key);
         $$('input[data-check]').forEach(cb => {
           cb.checked = false;
           cb.closest(".day").classList.remove("done");
@@ -202,6 +219,7 @@
 
   /* ---------- boot ---------- */
   document.addEventListener("DOMContentLoaded", () => {
+    ACTIVE = resolveActive();
     initTheme();
     initNavActive();
     renderRoadmap();
