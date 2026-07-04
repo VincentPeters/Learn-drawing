@@ -1,7 +1,338 @@
 ---
-// Placeholder — replaced by the real landing page in Task 8.
 import Base from '../layouts/Base.astro';
+import Diagram from '../components/Diagram.astro';
+import { MODULES, lessonUrl, moduleUrl } from '../lib/modules';
+import { lessonsOf, phasesOf, sequence } from '../lib/course';
+import { ICONS } from '../lib/icons';
+
+const groups = [];
+for (const m of [1, 2] as const) {
+  groups.push({ mm: MODULES[m], lessons: await lessonsOf(m), phases: await phasesOf(m) });
+}
+const seq = (await sequence()).map(({ m, n, title, url }) => ({ m, n, title, url }));
 ---
-<Base title="Draft30" description="placeholder" active="home">
-  <h1>Scaffold OK</h1>
+<Base
+  title="Draft30 — Learn Technical Drawing &amp; Rendering in 45 Lessons"
+  description="A free, visual, 45-lesson course in two modules: technical/engineering drawing (orthographic, isometric, dimensioning, sections) then rendering, shading and colour."
+  active="home"
+>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">Free · self-paced · pencil and paper</span>
+        <h1>Learn <span class="u">technical drawing</span> in 45 lessons.</h1>
+        <p class="lead">Two modules take you from your first freehand line to a finished, dimensioned drawing — then on to shading, light and colour. No software, no expensive kit. Just a pencil and some paper.</p>
+        <div class="hero-cta">
+          <a href={lessonUrl(1, 1)} class="btn btn-primary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            Start the course
+          </a>
+          <a href={moduleUrl(1)} class="btn btn-ghost">See the course map</a>
+        </div>
+        <div class="hero-stats">
+          <div class="s"><div class="n">45</div><div class="l">lessons</div></div>
+          <div class="s"><div class="n">2</div><div class="l">modules</div></div>
+          <div class="s"><div class="n">45–90</div><div class="l">min / lesson</div></div>
+        </div>
+      </div>
+      <div class="hero-art">
+        <svg viewBox="0 0 460 360" xmlns="http://www.w3.org/2000/svg" class="dg" role="img" aria-label="Orthographic and isometric views of a bracket">
+          <!-- subtle drafting grid -->
+          <defs>
+            <pattern id="hgrid" width="20" height="20" patternUnits="userSpaceOnUse">
+              <path d="M20 0 L0 0 0 20" fill="none" stroke="var(--grid-strong)" stroke-width="1"/>
+            </pattern>
+            <marker id="ha" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M8,0 L8,6 L0,3 Z" class="fill-soft"/></marker>
+            <marker id="hb" markerWidth="10" markerHeight="10" refX="0" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L8,3 Z" class="fill-soft"/></marker>
+          </defs>
+          <rect x="0" y="0" width="460" height="360" fill="url(#hgrid)"/>
+          <!-- FRONT view -->
+          <path d="M60,250 L170,250 L170,190 L110,190 L110,140 L60,140 Z" class="ln-visible fill-paper"/>
+          <circle cx="85" cy="215" r="12" class="ln-visible fill-none"/>
+          <line x1="85" y1="215" x2="85" y2="215" class="ln-center"/>
+          <line x1="70" y1="215" x2="100" y2="215" class="ln-center"/>
+          <line x1="85" y1="200" x2="85" y2="230" class="ln-center"/>
+          <line x1="60" y1="270" x2="170" y2="270" class="ln-dim" marker-start="url(#hb)" marker-end="url(#ha)"/>
+          <rect x="105" y="263" width="22" height="14" class="fill-paper"/>
+          <text x="107" y="274" class="dg-lbl-ink">100</text>
+          <text x="60" y="300" class="dg-lbl-blue">FRONT</text>
+          <!-- TOP view -->
+          <rect x="60" y="60" width="110" height="55" class="ln-visible fill-paper"/>
+          <line x1="85" y1="60" x2="85" y2="115" class="ln-center"/>
+          <text x="60" y="50" class="dg-lbl-blue">TOP</text>
+          <line x1="60" y1="115" x2="60" y2="140" class="ln-constr"/>
+          <line x1="170" y1="115" x2="170" y2="140" class="ln-constr"/>
+          <!-- ISO pictorial -->
+          <g transform="translate(300,150)">
+            <path d="M0,60 L60,25 L120,60 L60,95 Z" class="ln-visible fill-paper"/>
+            <path d="M0,60 L0,140 L60,175 L60,95 Z" class="ln-visible fill-paper" opacity=".92"/>
+            <path d="M120,60 L120,120 L96,133 L96,88 L60,108 L60,175 Z" class="ln-visible fill-paper" opacity=".8"/>
+            <ellipse cx="42" cy="112" rx="13" ry="20" transform="rotate(-30 42 112)" class="ln-blue fill-none"/>
+          </g>
+          <text x="300" y="330" class="dg-lbl-accent">ISOMETRIC</text>
+        </svg>
+        <span class="caption">module 1 · you draw this</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTINUE / START -->
+  <section style="padding-top:8px">
+    <div class="wrap">
+      <div class="continue-band" id="continue-band"></div>
+    </div>
+  </section>
+
+  <!-- WHAT YOU LEARN -->
+  <section class="alt">
+    <div class="wrap">
+      <div class="section-head center">
+        <div class="kicker">By the end</div>
+        <h2>What you'll actually be able to do</h2>
+        <p>Across two modules you go from precise line work to fully rendered, coloured plates. <b>Module 1</b> builds the engineering drawing; <b>Module 2</b> brings it to life with tone, light and colour. You learn it by hand, because working it out on paper is what makes it stick.</p>
+      </div>
+      <div class="feature-grid">
+        <div class="feature reveal">
+          <span class="mtag mtag-1">Module 1</span>
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20 L20 4M4 20h5M4 20v-5"/></svg></div>
+          <h3>Draw a confident line</h3>
+          <p>Steady freehand lines and clean ellipses, plus the standard "alphabet of lines" that every drawing is built from.</p>
+        </div>
+        <div class="feature reveal">
+          <span class="mtag mtag-1">Module 1</span>
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="8" height="8"/><rect x="13" y="13" width="8" height="8"/><path d="M11 7h6v6"/></svg></div>
+          <h3>Project any object</h3>
+          <p>Turn a 3-D part into aligned front, top, and side views in both first and third angle, and work out a missing view from two.</p>
+        </div>
+        <div class="feature reveal">
+          <span class="mtag mtag-1">Module 1</span>
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3 L21 8 L21 16 L12 21 L3 16 L3 8 Z"/><path d="M12 3v18M3 8l9 5 9-5"/></svg></div>
+          <h3>Draw in 3-D</h3>
+          <p>Isometric, oblique, and one- and two-point perspective, including the isometric circles and cylinders that trip most people up.</p>
+        </div>
+        <div class="feature reveal">
+          <span class="mtag mtag-1">Module 1</span>
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 18h18M6 18V9M18 18V6M6 12h12"/><path d="M4 21l2-3M20 21l-2-3"/></svg></div>
+          <h3>Dimension &amp; section it</h3>
+          <p>Dimensions, tolerances and fits, a first look at GD&amp;T, section and auxiliary views, plus thread and fastener shorthand.</p>
+        </div>
+        <div class="feature reveal">
+          <span class="mtag mtag-1">Module 1</span>
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="8" r="4"/><path d="M12 12l8 8M18 14l2 6-6-2"/></svg></div>
+          <h3>Finish a real sheet</h3>
+          <p>Intersections, flat-pattern developments, assemblies with a parts list, and a complete title-blocked capstone drawing.</p>
+        </div>
+        <div class="feature reveal">
+          <span class="mtag mtag-2">Module 2</span>
+          <div class="ico" style="background:var(--accent-soft);color:var(--accent)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="1"/><path d="M4 9l5 11M9 4l7 16M15 4l5 9"/></svg></div>
+          <h3>Shade with tone</h3>
+          <p>A clean value scale and hatching that follows the form — the cross-hatched look of the academic constructive tradition.</p>
+        </div>
+        <div class="feature reveal">
+          <span class="mtag mtag-2">Module 2</span>
+          <div class="ico" style="background:var(--accent-soft);color:var(--accent)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z"/></svg></div>
+          <h3>Read the light</h3>
+          <p>One light source, six readable zones — highlight, core shadow, reflected light, and constructed cast shadows that ground the form.</p>
+        </div>
+        <div class="feature reveal">
+          <span class="mtag mtag-2">Module 2</span>
+          <div class="ico" style="background:var(--accent-soft);color:var(--accent)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="9" r="4"/><circle cx="15" cy="15" r="4"/></svg></div>
+          <h3>Bring it to colour</h3>
+          <p>The graphite-plus-blue-and-sanguine palette: warm and cool temperature, and selective colour to lead the eye.</p>
+        </div>
+        <div class="feature reveal">
+          <span class="mtag mtag-2">Module 2</span>
+          <div class="ico" style="background:var(--accent-soft);color:var(--accent)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v16H4z"/><path d="M8 20V10M12 20V6M16 20v-8"/></svg></div>
+          <h3>Finish a full plate</h3>
+          <p>Edge control, texture, and a finished composition of intersecting solids — hatched, shaded and coloured, like the reference plate.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TWO MODULES -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <div class="kicker">Two modules</div>
+        <h2>First the engineering, then the art</h2>
+        <p>Draft30 comes in two parts. Module 1 teaches the precise, correct drawing that describes a real part. Module 2 adds the shading, hatching, and colour that turn it into a finished plate. Do them in order, or dip into Module 2 once you can construct a solid.</p>
+      </div>
+      <div class="modules">
+        <a class="module-card" href={moduleUrl(1)} style="--mc:var(--blue)">
+          <span class="mnum">Module 1</span>
+          <h3>Technical Drawing</h3>
+          <div class="meta">30 lessons · 5 phases · lines → a full dimensioned sheet</div>
+          <div class="mfig"><Diagram name="three-views" /></div>
+          <p>Instruments and line conventions, orthographic projection, isometric and perspective, dimensioning, sections, intersections, and a complete detail drawing.</p>
+          <span class="go">Start the course <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+        <a class="module-card" href={moduleUrl(2)} style="--mc:var(--accent)">
+          <span class="mnum">Module 2</span>
+          <h3>Rendering &amp; Colour</h3>
+          <div class="meta">15 lessons · 4 phases · tone, light &amp; the sanguine palette</div>
+          <div class="mfig"><Diagram name="finished-plate" /></div>
+          <p>Value and hatching that follows the form, one convincing light with cast shadows, and the graphite-plus-blue-and-sanguine colour of the academic constructive tradition.</p>
+          <span class="go">Explore the artisan's layer <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="alt">
+    <div class="wrap">
+      <div class="section-head center">
+        <div class="kicker">How a session works</div>
+        <h2>Every lesson, the same rhythm</h2>
+        <p>Every lesson is one focused page with the same shape, so you always know what to do. Show up, work the three blocks, check it off, move on.</p>
+      </div>
+      <div class="steps">
+        <div class="step reveal"><div class="sn">1</div><h3>Open the lesson</h3><p>Each lesson is its own page: a clear goal, a diagram, and roughly 45–90 minutes of work.</p></div>
+        <div class="step reveal"><div class="sn">2</div><h3>Work the blocks</h3><p>A 10-minute warm-up, the main exercise, then a checkpoint that tells you when you've got it.</p></div>
+        <div class="step reveal"><div class="sn">3</div><h3>Check it off</h3><p>Mark it complete. Your progress is saved in the browser and the next lesson is one tap away.</p></div>
+        <div class="step reveal"><div class="sn">4</div><h3>Build up</h3><p>Five phases stack from your first line to a finished sheet — then Module 2 adds shading and colour.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHASES -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <div class="kicker">The full arc</div>
+        <h2>Nine phases across two modules</h2>
+        <p>Each phase builds on the one before it. Module 1's five phases take you from your first line to a finished sheet; Module 2's four then add tone, light and colour on top.</p>
+      </div>
+      <div class="phases" id="phases">
+        {groups.map(({ mm, lessons, phases }) => (
+          <Fragment>
+            <div class="phase-mod-head" style={`--phase:${mm.color}`}>
+              <span class="pm-tag">{mm.tag}</span><span class="pm-title">{mm.title}</span>
+              <span class="pm-meta">{lessons.length} lessons · {phases.length} phases</span>
+            </div>
+            {phases.map((ph, pi) => (
+              <div class="phase-row reveal" style={`--phase:${ph.data.color}`}>
+                <div class="phase-days">Lessons<span class="big">{ph.data.lessons}</span></div>
+                <div class="phase-body">
+                  <h3>{ph.data.name}</h3>
+                  <p>{ph.data.blurb}</p>
+                  <div class="phase-chips">
+                    {lessons.filter((l) => l.data.phase === pi).map((l) => <span class="chip">{l.data.title}</span>)}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </Fragment>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ROADMAP -->
+  <section class="alt" id="roadmap-section">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="kicker">Lesson by lesson</div>
+        <h2>The whole journey at a glance</h2>
+        <p>Tap any lesson to open it. Lessons you've finished are saved in your browser and marked here with a check.</p>
+      </div>
+      <div id="roadmap">
+        {groups.map(({ mm, lessons, phases }) => (
+          <div class="roadmap-group" style={`--phase:${mm.color}`}>
+            <div class="roadmap-label"><span class="rl-tag">{mm.tag}</span><span class="rl-title">{mm.title}</span><span class="rl-count">{lessons.length} lessons</span></div>
+            <div class="roadmap">
+              {lessons.map((l) => (
+                <a class="day-cell" href={lessonUrl(mm.m, l.data.number)} style={`--phase:${phases[l.data.phase].data.color}`} data-m={mm.m} data-n={l.data.number}>
+                  <span class="dn">{mm.short.toUpperCase()} {String(l.data.number).padStart(2, '0')}</span>
+                  <span class="dt">{l.data.title}</span>
+                  <span class="check"><Fragment set:html={ICONS.check} /></span>
+                </a>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+      <div class="center mt-lg">
+        <a href={moduleUrl(1)} class="btn btn-primary">Open Module 1 map</a>
+        <a href={moduleUrl(2)} class="btn btn-ghost">Open Module 2 map</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOOLS + DAILY ROUTINE -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <div class="kicker">Before you start</div>
+        <h2>Your kit and daily routine</h2>
+        <p>You don't need much, and for learning the basics cheap pencil-and-paper tools genuinely beat any software. Here's the whole list.</p>
+      </div>
+      <div class="tools-grid">
+        <div class="tool-card">
+          <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20 L20 4l-3-3-16 16 3 3zM14 4l3 3"/></svg> Tools</h3>
+          <ul class="tool-list">
+            <li><span class="k">Paper</span><span class="v"><b>A3, smooth, 90–120 gsm.</b> A grid or dot pad helps early on.</span></li>
+            <li><span class="k">Pencils</span><span class="v"><b>2H, HB, 2B.</b> 2H for construction, HB/2B for outlines and tone.</span></li>
+            <li><span class="k">Accents</span><span class="v">Optional blue &amp; a warm pencil for highlighting features.</span></li>
+            <li><span class="k">Eraser</span><span class="v">Kneaded eraser plus a fine click eraser for details.</span></li>
+            <li><span class="k">Ruler</span><span class="v">For <b>checking</b> proportions only — never for drawing lines.</span></li>
+          </ul>
+        </div>
+        <div class="tool-card">
+          <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg> Each lesson · 45–90 min</h3>
+          <ul class="tool-list">
+            <li><span class="k">10 min</span><span class="v"><b>Warm-up.</b> Freehand straight lines and ellipses.</span></li>
+            <li><span class="k">30–60 min</span><span class="v"><b>Main exercise</b> for the current lesson.</span></li>
+            <li><span class="k">10 min</span><span class="v"><b>Hatching / lettering</b> practice on scrap.</span></li>
+            <li><span class="k">Rhythm</span><span class="v"><b>Six short sessions a week</b> beat one long weekend.</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout mt-lg reveal">
+        If you take one thing from this page, take this: show up often, even when you only have twenty minutes. Six short sessions a week will get you further than one long weekend push. Your hand learns this by repetition, not by cramming.
+        <div class="who">on building the habit</div>
+      </div>
+    </div>
+  </section>
 </Base>
+
+<script type="application/json" id="seq-data" set:html={JSON.stringify(seq)} />
+<script>
+  import { load } from '../scripts/progress';
+  import { ICONS } from '../lib/icons';
+
+  function paintHome() {
+    const dataEl = document.getElementById('seq-data');
+    if (!dataEl) return;
+    const seq = JSON.parse(dataEl.textContent || '[]') as Array<{ m: number; n: number; title: string; url: string }>;
+    const done: Record<number, Record<string, 1>> = { 1: load(1), 2: load(2) };
+
+    document.querySelectorAll<HTMLElement>('.day-cell').forEach((cell) => {
+      cell.classList.toggle('done', Boolean(done[Number(cell.dataset.m)!]?.[cell.dataset.n!]));
+    });
+
+    const band = document.getElementById('continue-band');
+    if (!band) return;
+    const next = seq.find((s) => !done[s.m]?.[s.n]);
+    const started = Object.keys(done[1]).length + Object.keys(done[2]).length > 0;
+    if (!next) {
+      band.innerHTML = `<div><div class="cb-label">All done</div><div class="cb-title">You've completed every lesson 🎉</div><div class="cb-sub">Revisit any day, or run the capstone again — it'll be better each time.</div></div>
+        <div class="cb-actions"><a href="/module-1/" class="btn btn-ghost">Course map</a></div>`;
+    } else {
+      const tag = next.m === 1 ? 'Module 1' : 'Module 2';
+      const inMod = seq.filter((s) => s.m === next.m);
+      const doneInMod = inMod.filter((s) => done[s.m]?.[s.n]).length;
+      band.innerHTML = `<div>
+          <div class="cb-label">${started ? 'Continue where you left off' : 'Start here'}</div>
+          <div class="cb-title">${tag} · Lesson ${next.n} — ${next.title}</div>
+          <div class="cb-sub">${started ? `${doneInMod} of ${inMod.length} lessons done in this module` : 'Your first session. All you need is a pencil and paper.'}</div>
+        </div>
+        <div class="cb-actions"><a href="${next.url}" class="btn btn-primary">${started ? 'Continue' : 'Begin'} ${ICONS.arrow}</a></div>`;
+    }
+  }
+
+  document.addEventListener('astro:page-load', paintHome);
+  document.addEventListener('progresschange', paintHome);
+</script>
