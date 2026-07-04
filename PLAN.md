@@ -1,4 +1,6 @@
-# Learn Technical Drawing in 30 Lessons
+# Learn Technical Drawing & Rendering — 45 Lessons, 2 Modules
+
+## Module 1 — Technical Drawing (30 lessons)
 
 A 30-lesson plan for learning **general technical and engineering drawing**, the kind
 used to describe real parts and machines. You learn it by hand before touching CAD,

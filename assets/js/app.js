@@ -121,26 +121,38 @@
      HOME
      ================================================================== */
   function renderHome() {
-    // roadmap mini-grid → deep links to lesson pages
+    // roadmap → both modules, grouped and deep-linked to lesson pages
     const grid = $("#roadmap");
     if (grid) {
-      const done = load(mod(1).key);
-      grid.innerHTML = daysOf(1).map(d => {
-        const ph = phasesOf(1)[d.phase];
-        return `<a class="day-cell ${done[d.n] ? "done" : ""}" href="${href(1, d.n)}" style="--phase:${ph.color}">
-          <span class="dn">LESSON ${String(d.n).padStart(2, "0")}</span>
-          <span class="dt">${d.title}</span>
-          <span class="check">${I.check}</span></a>`;
+      grid.innerHTML = [1, 2].map(m => {
+        const mm = mod(m), done = load(mm.key);
+        const cells = daysOf(m).map(d => {
+          const ph = phasesOf(m)[d.phase];
+          return `<a class="day-cell ${done[d.n] ? "done" : ""}" href="${href(m, d.n)}" style="--phase:${ph.color}">
+            <span class="dn">${mm.short.toUpperCase()} ${String(d.n).padStart(2, "0")}</span>
+            <span class="dt">${d.title}</span>
+            <span class="check">${I.check}</span></a>`;
+        }).join("");
+        return `<div class="roadmap-group" style="--phase:${mm.color}">
+          <div class="roadmap-label"><span class="rl-tag">${mm.tag}</span><span class="rl-title">${mm.title}</span><span class="rl-count">${daysOf(m).length} lessons</span></div>
+          <div class="roadmap">${cells}</div></div>`;
       }).join("");
     }
-    // phase timeline
+    // phase timeline → both modules
     const ph = $("#phases");
     if (ph) {
-      ph.innerHTML = phasesOf(1).map((p, i) => {
-        const chips = daysOf(1).filter(d => d.phase === i).map(d => `<span class="chip">${d.title}</span>`).join("");
-        return `<div class="phase-row reveal" style="--phase:${p.color}">
-          <div class="phase-days">Lessons<span class="big">${p.days}</span></div>
-          <div class="phase-body"><h3>${p.name}</h3><p>${p.blurb}</p><div class="phase-chips">${chips}</div></div></div>`;
+      ph.innerHTML = [1, 2].map(m => {
+        const mm = mod(m);
+        const head = `<div class="phase-mod-head" style="--phase:${mm.color}">
+          <span class="pm-tag">${mm.tag}</span><span class="pm-title">${mm.title}</span>
+          <span class="pm-meta">${daysOf(m).length} lessons · ${phasesOf(m).length} phases</span></div>`;
+        const rows = phasesOf(m).map((p, i) => {
+          const chips = daysOf(m).filter(d => d.phase === i).map(d => `<span class="chip">${d.title}</span>`).join("");
+          return `<div class="phase-row reveal" style="--phase:${p.color}">
+            <div class="phase-days">Lessons<span class="big">${p.days}</span></div>
+            <div class="phase-body"><h3>${p.name}</h3><p>${p.blurb}</p><div class="phase-chips">${chips}</div></div></div>`;
+        }).join("");
+        return head + rows;
       }).join("");
     }
     // continue band

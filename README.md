@@ -1,8 +1,8 @@
-# Draft30 — Learn Technical Drawing in 30 Lessons
+# Draft30 — Learn Technical Drawing & Rendering in 45 Lessons
 
 A free, self-contained companion **website** for learning **general technical and
-engineering drawing**. It reworks a 12-week academic-art plan into a **30-lesson
-program** you can actually keep up with.
+engineering drawing**. It reworks and expands a 12-week academic-art plan into a **45-lesson course in
+two modules** you can actually keep up with.
 
 No build step, no dependencies, no tracking. Open `index.html` in any browser and
 start drawing.
