@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Draft30 — Learn Technical Drawing in 30 Days</title>
+  <meta name="description" content="A free, visual, 30-day program that takes you from your first straight line to a complete engineering drawing. Orthographic projection, isometric, dimensioning, sections, and more.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='4' fill='%232c5f8a'/%3E%3Cpath d='M5 19 L12 5 L19 19' stroke='white' stroke-width='2' fill='none'/%3E%3Cline x1='7.5' y1='14' x2='16.5' y2='14' stroke='white' stroke-width='1.5'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav">
+      <a class="brand" href="index.html">
+        <svg class="mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1.5" y="1.5" width="21" height="21" rx="3"/><path d="M6 18 L12 6 L18 18"/><line x1="8.4" y1="13.5" x2="15.6" y2="13.5"/></svg>
+        Draft30 <span class="tag">30-day</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Overview</a>
+        <a href="curriculum.html">Curriculum</a>
+        <a href="reference.html">Reference</a>
+        <a href="curriculum.html" class="nav-cta btn btn-primary" style="padding:7px 14px">Start Day 1</a>
+        <button class="theme-toggle" aria-label="Toggle theme"></button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <span class="eyebrow">Free · self-paced · no software</span>
+          <h1>Learn <span class="u">technical drawing</span> in 30 days.</h1>
+          <p class="lead">A structured, visual program that takes you from your first freehand line to a complete, dimensioned engineering drawing — pencil and paper, one focused session a day.</p>
+          <div class="hero-cta">
+            <a href="curriculum.html" class="btn btn-primary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              Start the 30 days
+            </a>
+            <a href="#roadmap-section" class="btn btn-ghost">See the roadmap</a>
+          </div>
+          <div class="hero-stats">
+            <div class="s"><div class="n">30</div><div class="l">days</div></div>
+            <div class="s"><div class="n">5</div><div class="l">phases</div></div>
+            <div class="s"><div class="n">45–90</div><div class="l">min / day</div></div>
+          </div>
+        </div>
+        <div class="hero-art">
+          <svg viewBox="0 0 460 360" xmlns="http://www.w3.org/2000/svg" class="dg" role="img" aria-label="Orthographic and isometric views of a bracket">
+            <!-- subtle drafting grid -->
+            <defs>
+              <pattern id="hgrid" width="20" height="20" patternUnits="userSpaceOnUse">
+                <path d="M20 0 L0 0 0 20" fill="none" stroke="var(--grid-strong)" stroke-width="1"/>
+              </pattern>
+              <marker id="ha" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M8,0 L8,6 L0,3 Z" class="fill-soft"/></marker>
+              <marker id="hb" markerWidth="10" markerHeight="10" refX="0" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L8,3 Z" class="fill-soft"/></marker>
+            </defs>
+            <rect x="0" y="0" width="460" height="360" fill="url(#hgrid)"/>
+            <!-- FRONT view -->
+            <path d="M60,250 L170,250 L170,190 L110,190 L110,140 L60,140 Z" class="ln-visible fill-paper"/>
+            <circle cx="85" cy="215" r="12" class="ln-visible fill-none"/>
+            <line x1="85" y1="215" x2="85" y2="215" class="ln-center"/>
+            <line x1="70" y1="215" x2="100" y2="215" class="ln-center"/>
+            <line x1="85" y1="200" x2="85" y2="230" class="ln-center"/>
+            <line x1="60" y1="270" x2="170" y2="270" class="ln-dim" marker-start="url(#hb)" marker-end="url(#ha)"/>
+            <rect x="105" y="263" width="22" height="14" class="fill-paper"/>
+            <text x="107" y="274" class="dg-lbl-ink">100</text>
+            <text x="60" y="300" class="dg-lbl-blue">FRONT</text>
+            <!-- TOP view -->
+            <rect x="60" y="60" width="110" height="55" class="ln-visible fill-paper"/>
+            <line x1="85" y1="60" x2="85" y2="115" class="ln-center"/>
+            <text x="60" y="50" class="dg-lbl-blue">TOP</text>
+            <line x1="60" y1="115" x2="60" y2="140" class="ln-constr"/>
+            <line x1="170" y1="115" x2="170" y2="140" class="ln-constr"/>
+            <!-- ISO pictorial -->
+            <g transform="translate(300,150)">
+              <path d="M0,60 L60,25 L120,60 L60,95 Z" class="ln-visible fill-paper"/>
+              <path d="M0,60 L0,140 L60,175 L60,95 Z" class="ln-visible fill-paper" opacity=".92"/>
+              <path d="M120,60 L120,120 L96,133 L96,88 L60,108 L60,175 Z" class="ln-visible fill-paper" opacity=".8"/>
+              <ellipse cx="42" cy="112" rx="13" ry="20" transform="rotate(-30 42 112)" class="ln-blue fill-none"/>
+            </g>
+            <text x="300" y="330" class="dg-lbl-accent">ISOMETRIC</text>
+          </svg>
+          <span class="caption">day 30 · you draw this</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHAT YOU LEARN -->
+    <section class="alt">
+      <div class="wrap">
+        <div class="section-head center">
+          <div class="kicker">What you'll be able to do</div>
+          <h2>From a blank sheet to a buildable drawing</h2>
+          <p>This is general technical &amp; engineering drawing — the visual language of machines, parts, and products. No CAD required; the fundamentals live in your hand and eye first.</p>
+        </div>
+        <div class="feature-grid">
+          <div class="feature reveal">
+            <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20 L20 4M4 20h5M4 20v-5"/></svg></div>
+            <h3>Command the line</h3>
+            <p>Confident freehand lines, clean ellipses, and the standard "alphabet of lines" that every drawing is built from.</p>
+          </div>
+          <div class="feature reveal">
+            <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="8" height="8"/><rect x="13" y="13" width="8" height="8"/><path d="M11 7h6v6"/></svg></div>
+            <h3>Project any object</h3>
+            <p>Turn a 3-D part into aligned front, top, and side views — first- and third-angle — and reconstruct a missing view.</p>
+          </div>
+          <div class="feature reveal">
+            <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3 L21 8 L21 16 L12 21 L3 16 L3 8 Z"/><path d="M12 3v18M3 8l9 5 9-5"/></svg></div>
+            <h3>Draw in 3-D</h3>
+            <p>Isometric, oblique, and one- &amp; two-point perspective — including the tricky isometric circles and cylinders.</p>
+          </div>
+          <div class="feature reveal">
+            <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 18h18M6 18V9M18 18V6M6 12h12"/><path d="M4 21l2-3M20 21l-2-3"/></svg></div>
+            <h3>Specify it fully</h3>
+            <p>Dimensioning, tolerances and fits, a first taste of GD&amp;T, plus threads and fastener conventions.</p>
+          </div>
+          <div class="feature reveal">
+            <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v16H4z"/><path d="M4 12l8-8M9 17l8-8M14 20l6-6"/></svg></div>
+            <h3>Cut it open</h3>
+            <p>Section views and auxiliary views to reveal interior detail and the true shape of any inclined surface.</p>
+          </div>
+          <div class="feature reveal">
+            <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="8" r="4"/><path d="M12 12l8 8M18 14l2 6-6-2"/></svg></div>
+            <h3>Ship a real sheet</h3>
+            <p>Intersections, flat-pattern developments, assemblies with a BOM, and a complete title-blocked capstone drawing.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PHASES -->
+    <section>
+      <div class="wrap">
+        <div class="section-head">
+          <div class="kicker">The arc of the month</div>
+          <h2>Five phases, built to stack</h2>
+          <p>Each phase depends on the last. Skip nothing — the confidence you build early is what makes the hard geometry easy later.</p>
+        </div>
+        <div class="phases" id="phases"></div>
+      </div>
+    </section>
+
+    <!-- ROADMAP -->
+    <section class="alt" id="roadmap-section">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="kicker">Day by day</div>
+          <h2>The 30-day roadmap</h2>
+          <p>Tap any day to jump into its exercises. Your completed days are saved in this browser and shown here with a check.</p>
+        </div>
+        <div class="roadmap" id="roadmap"></div>
+        <div class="center mt-lg">
+          <a href="curriculum.html" class="btn btn-primary">Open the full curriculum</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOOLS + DAILY ROUTINE -->
+    <section>
+      <div class="wrap">
+        <div class="section-head">
+          <div class="kicker">Before you start</div>
+          <h2>Your kit &amp; daily routine</h2>
+          <p>Cheap analog tools beat expensive software for learning the fundamentals. Here's everything you need.</p>
+        </div>
+        <div class="tools-grid">
+          <div class="tool-card">
+            <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20 L20 4l-3-3-16 16 3 3zM14 4l3 3"/></svg> Tools</h3>
+            <ul class="tool-list">
+              <li><span class="k">Paper</span><span class="v"><b>A3, smooth, 90–120 gsm.</b> A grid or dot pad helps early on.</span></li>
+              <li><span class="k">Pencils</span><span class="v"><b>2H, HB, 2B.</b> 2H for construction, HB/2B for outlines and tone.</span></li>
+              <li><span class="k">Accents</span><span class="v">Optional blue &amp; a warm pencil for highlighting features.</span></li>
+              <li><span class="k">Eraser</span><span class="v">Kneaded eraser plus a fine click eraser for details.</span></li>
+              <li><span class="k">Ruler</span><span class="v">For <b>checking</b> proportions only — never for drawing lines.</span></li>
+            </ul>
+          </div>
+          <div class="tool-card">
+            <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg> Daily routine · 45–90 min</h3>
+            <ul class="tool-list">
+              <li><span class="k">10 min</span><span class="v"><b>Warm-up.</b> Freehand straight lines and ellipses.</span></li>
+              <li><span class="k">30–60 min</span><span class="v"><b>Main exercise</b> for the current day.</span></li>
+              <li><span class="k">10 min</span><span class="v"><b>Hatching / lettering</b> practice on scrap.</span></li>
+              <li><span class="k">Rhythm</span><span class="v"><b>Six short sessions a week</b> beat one long weekend.</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="callout mt-lg reveal">
+          Consistency beats duration. Thirty focused sessions will take you further than sporadic marathon days ever will — the skill is in your hand, and hands learn by repetition.
+          <div class="who">— the one rule that matters most</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-grid">
+      <div>
+        <a class="brand" href="index.html">
+          <svg class="mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1.5" y="1.5" width="21" height="21" rx="3"/><path d="M6 18 L12 6 L18 18"/><line x1="8.4" y1="13.5" x2="15.6" y2="13.5"/></svg>
+          Draft30
+        </a>
+        <div class="footer-note">A companion site for learning technical &amp; engineering drawing.<br>Built to be opened, printed, and drawn along with.</div>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Overview</a>
+        <a href="curriculum.html">Curriculum</a>
+        <a href="reference.html">Reference</a>
+        <a href="curriculum.html#day-1">Start Day 1</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/diagrams.js"></script>
+  <script src="assets/js/curriculum.js"></script>
+  <script>
+    // render phase timeline (index only)
+    document.addEventListener("DOMContentLoaded", function () {
+      var host = document.getElementById("phases");
+      if (!host || !window.CURRICULUM) return;
+      host.innerHTML = window.CURRICULUM.PHASES.map(function (p, i) {
+        var chips = window.CURRICULUM.DAYS.filter(function (d) { return d.phase === i; })
+          .map(function (d) { return '<span class="chip">' + d.title + '</span>'; }).join("");
+        return '<div class="phase-row reveal" style="--phase:' + p.color + '">' +
+          '<div class="phase-days">Days<span class="big">' + p.days + '</span></div>' +
+          '<div class="phase-body"><h3>' + p.name + '</h3><p>' + p.blurb + '</p>' +
+          '<div class="phase-chips">' + chips + '</div></div></div>';
+      }).join("");
+    });
+  </script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reference — Draft30 · Technical Drawing Cheat Sheet</title>
+  <meta name="description" content="A visual quick-reference for technical drawing: the alphabet of lines, orthographic projection, isometric, dimensioning, sections, intersections, and a glossary of terms.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='4' fill='%232c5f8a'/%3E%3Cpath d='M5 19 L12 5 L19 19' stroke='white' stroke-width='2' fill='none'/%3E%3Cline x1='7.5' y1='14' x2='16.5' y2='14' stroke='white' stroke-width='1.5'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav">
+      <a class="brand" href="index.html">
+        <svg class="mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1.5" y="1.5" width="21" height="21" rx="3"/><path d="M6 18 L12 6 L18 18"/><line x1="8.4" y1="13.5" x2="15.6" y2="13.5"/></svg>
+        Draft30 <span class="tag">30-day</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Overview</a>
+        <a href="curriculum.html">Curriculum</a>
+        <a href="reference.html">Reference</a>
+        <button class="theme-toggle" aria-label="Toggle theme"></button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="wrap" style="padding-top:36px;padding-bottom:40px">
+    <div class="section-head" style="margin-bottom:32px">
+      <div class="kicker">Quick reference</div>
+      <h2>The technical drawing cheat sheet</h2>
+      <p>Everything the course covers, condensed into diagrams you can glance at mid-drawing. Bookmark this page.</p>
+    </div>
+
+    <div class="ref-grid">
+      <div class="ref-card reveal">
+        <h3>The alphabet of lines</h3>
+        <p>Every line on a drawing carries meaning through its style and weight. Learn to read and draw all seven.</p>
+        <div class="ref-figrow">
+          <div class="ref-fig" data-diagram="line-types"></div>
+          <div class="ref-fig" data-diagram="line-weights"></div>
+        </div>
+      </div>
+
+      <div class="ref-card reveal">
+        <h3>Orthographic projection</h3>
+        <p>The core of engineering drawing: unfold the "glass box" so a 3-D part becomes aligned 2-D views. Front, top, and right are usually enough.</p>
+        <div class="ref-figrow">
+          <div class="ref-fig" data-diagram="glass-box"></div>
+          <div class="ref-fig" data-diagram="three-views"></div>
+        </div>
+      </div>
+
+      <div class="ref-card reveal">
+        <h3>First angle vs third angle</h3>
+        <p>Two conventions for where the views land. The symbol in the title block tells the reader which one you used.</p>
+        <div class="ref-figrow single">
+          <div class="ref-fig" data-diagram="angle-symbol"></div>
+        </div>
+      </div>
+
+      <div class="ref-card reveal">
+        <h3>Pictorial views</h3>
+        <p>Show depth on flat paper. Isometric keeps true lengths on three axes; the isometric circle is a leaning ellipse.</p>
+        <div class="ref-figrow">
+          <div class="ref-fig" data-diagram="isometric-axes"></div>
+          <div class="ref-fig" data-diagram="iso-ellipse"></div>
+        </div>
+        <div class="ref-figrow" style="margin-top:20px">
+          <div class="ref-fig" data-diagram="one-point"></div>
+          <div class="ref-fig" data-diagram="two-point"></div>
+        </div>
+      </div>
+
+      <div class="ref-card reveal">
+        <h3>Dimensioning &amp; sections</h3>
+        <p>Turn a shape into a spec. Dimension every feature once; cut the part open to show what's inside and hatch the solid material.</p>
+        <div class="ref-figrow">
+          <div class="ref-fig" data-diagram="dimensioning"></div>
+          <div class="ref-fig" data-diagram="section-view"></div>
+        </div>
+      </div>
+
+      <div class="ref-card reveal">
+        <h3>Auxiliary views &amp; threads</h3>
+        <p>Look straight at a slanted face to get its true shape; use standard shorthand for threads and tapped holes.</p>
+        <div class="ref-figrow">
+          <div class="ref-fig" data-diagram="auxiliary"></div>
+          <div class="ref-fig" data-diagram="threads"></div>
+        </div>
+      </div>
+
+      <div class="ref-card reveal">
+        <h3>Intersections &amp; developments</h3>
+        <p>Plot the curve where two solids meet, then unfold a surface into the flat pattern a shop would cut.</p>
+        <div class="ref-figrow">
+          <div class="ref-fig" data-diagram="intersection"></div>
+          <div class="ref-fig" data-diagram="development"></div>
+        </div>
+      </div>
+
+      <div class="ref-card reveal">
+        <h3>Assemblies &amp; the sheet</h3>
+        <p>Show how parts fit with balloons and a BOM, then package it on a bordered sheet with a proper title block.</p>
+        <div class="ref-figrow">
+          <div class="ref-fig" data-diagram="assembly"></div>
+          <div class="ref-fig" data-diagram="title-block"></div>
+        </div>
+      </div>
+
+      <div class="ref-card reveal">
+        <h3>Glossary</h3>
+        <p>The terms you'll meet across the 30 days.</p>
+        <dl class="glossary">
+          <dt>Orthographic projection</dt><dd>Representing an object with parallel projectors perpendicular to the picture plane, giving true-shape views.</dd>
+          <dt>First / third angle</dt><dd>Two ISO conventions for arranging projected views; indicated by a truncated-cone symbol.</dd>
+          <dt>Isometric</dt><dd>A pictorial with axes at 120° apart where all three principal directions share one scale.</dd>
+          <dt>Oblique</dt><dd>A pictorial keeping one face true-shape with depth receding at an angle (cavalier = full, cabinet = half).</dd>
+          <dt>Hidden line</dt><dd>A dashed line showing an edge concealed behind material.</dd>
+          <dt>Center line</dt><dd>A thin long-short line marking axes of symmetry and hole centers.</dd>
+          <dt>Section view</dt><dd>A view of the part as if cut by a plane, with cut solid material hatched.</dd>
+          <dt>Cutting-plane line</dt><dd>The heavy line showing where a section is taken, with arrows for the viewing direction.</dd>
+          <dt>Auxiliary view</dt><dd>A view projected onto a plane parallel to an inclined surface to show its true shape.</dd>
+          <dt>Dimension line</dt><dd>A thin line with arrowheads carrying a measurement between extension lines.</dd>
+          <dt>Tolerance</dt><dd>The total permissible variation of a dimension.</dd>
+          <dt>Fit</dt><dd>The relationship (clearance, transition, interference) between mating parts.</dd>
+          <dt>GD&amp;T</dt><dd>Geometric Dimensioning &amp; Tolerancing — a symbolic system for form, orientation, and position.</dd>
+          <dt>Intersection</dt><dd>The curve produced where the surfaces of two solids meet.</dd>
+          <dt>Development</dt><dd>The unfolded, flat pattern of a 3-D surface used for fabrication.</dd>
+          <dt>Title block</dt><dd>The boxed area holding title, scale, material, author, and projection symbol.</dd>
+          <dt>Scale</dt><dd>The ratio of drawn size to real size (e.g. 1:2); dimensions always state the real value.</dd>
+          <dt>BOM</dt><dd>Bill of materials — the itemized parts list keyed to assembly balloons.</dd>
+        </dl>
+      </div>
+    </div>
+
+    <div class="center mt-lg">
+      <a href="curriculum.html" class="btn btn-primary">Back to the curriculum</a>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-grid">
+      <div>
+        <a class="brand" href="index.html">
+          <svg class="mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1.5" y="1.5" width="21" height="21" rx="3"/><path d="M6 18 L12 6 L18 18"/><line x1="8.4" y1="13.5" x2="15.6" y2="13.5"/></svg>
+          Draft30
+        </a>
+        <div class="footer-note">A companion site for learning technical &amp; engineering drawing.</div>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Overview</a>
+        <a href="curriculum.html">Curriculum</a>
+        <a href="reference.html">Reference</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/diagrams.js"></script>
+  <script src="assets/js/curriculum.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
