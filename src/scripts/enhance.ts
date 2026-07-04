@@ -23,22 +23,6 @@ document.addEventListener('click', (e) => {
   paintToggles();
 });
 
-function reveal(): void {
-  const els = Array.from(document.querySelectorAll('.reveal'));
-  if (!('IntersectionObserver' in window) || !els.length) {
-    els.forEach((e) => e.classList.add('in'));
-    return;
-  }
-  const io = new IntersectionObserver(
-    (entries) => entries.forEach((en) => {
-      if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
-    }),
-    { threshold: 0.1 },
-  );
-  els.forEach((e) => io.observe(e));
-}
-
 document.addEventListener('astro:page-load', () => {
   paintToggles();
-  reveal();
 });

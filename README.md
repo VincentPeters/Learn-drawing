@@ -40,7 +40,8 @@ src/lib/diagrams.ts    34 hand-authored, theme-aware SVG diagrams (both modules)
 src/pages/             Routes: index, module-[m]/, module-[m]/lesson-[n], reference, 404
 src/layouts/           Shared page layout/chrome
 src/components/        Reusable Astro components
-src/styles/style.css    Design system — "drafting paper" light + "blueprint" dark themes
+src/styles/style.css    Design system — "field manual": white-paper light + graphite dark themes (see DESIGN.md)
+public/fonts/           Self-hosted IBM Plex Sans/Mono woff2 subsets
 src/scripts/            Client-side enhance scripts: theme toggle, progress, prev/next
 public/                 Static passthrough + legacy-URL redirect stubs
 ```
@@ -83,8 +84,12 @@ There's no GitHub Pages workflow anymore; `.github/workflows/ci.yml` runs tests,
 
 ## Design notes
 
-- **No external requests.** All CSS, JS, fonts (system stack), and imagery
-  (inline SVG) are local, so the site works fully offline and passes strict CSP.
+- **No external requests.** All CSS, JS, fonts (self-hosted IBM Plex subsets),
+  and imagery (inline SVG) are local, so the site works fully offline and
+  passes strict CSP.
+- **The design is a field manual.** Graphite ink, drafting-olive and sanguine
+  accents on pure white paper, set in IBM Plex; the full system is documented
+  in `DESIGN.md`.
 - **Light & dark.** Respects your OS preference and remembers a manual override.
 - **Progress is local.** Completed lessons live in `localStorage`; nothing is uploaded.
 - **Accessible & responsive.** Semantic markup, reduced-motion support, and

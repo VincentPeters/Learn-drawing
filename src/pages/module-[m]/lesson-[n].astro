@@ -38,7 +38,7 @@ const { Content } = await render(entry);
   description={d.objective}
   active={m === 1 ? 'm1' : 'm2'}
 >
-  <div class="wrap" style={`--phase:${p.color}`}>
+  <div class="wrap lesson-col" style={`--mc:var(--m${m})`}>
     <nav class="crumbs" id="crumbs">
       <a href="/">Home</a><span class="sep">›</span>
       <a href={moduleUrl(m)}>{mm.tag}</a><span class="sep">›</span>
@@ -69,12 +69,12 @@ const { Content } = await render(entry);
       <div class="lesson-goal"><span class="g-label">Your goal</span>{d.objective}</div>
 
       <section class="lesson-block warmup">
-        <h2><span class="lb-ico"><Fragment set:html={ICONS.flame} /></span> Warm-up <small>≈ 10 min</small></h2>
+        <h2>Warm-up <small>≈ 10 min</small></h2>
         <ul>{d.warmup.map((w) => <li>{w}</li>)}</ul>
       </section>
 
       <section class="lesson-block">
-        <h2><span class="lb-ico"><Fragment set:html={ICONS.pencil} /></span> Main exercise <small>30–60 min</small></h2>
+        <h2>Main exercise <small>30–60 min</small></h2>
         <ul>{d.main.map((w) => <li>{w}</li>)}</ul>
       </section>
 
@@ -92,10 +92,10 @@ const { Content } = await render(entry);
       <nav class="lesson-nav" data-prev={prev?.url ?? ''} data-next={next?.url ?? ''}>
         {prev
           ? <a class="prev" href={prev.url}><span class="ln-dir">← Previous</span><span class="ln-title">{MODULES[prev.m].short} {prev.n} · {prev.title}</span></a>
-          : <a class="disabled"><span class="ln-dir">Start</span><span class="ln-title">You're at the beginning</span></a>}
+          : <a class="prev disabled"><span class="ln-dir">Start</span><span class="ln-title">You're at the beginning</span></a>}
         {next
           ? <a class="next" href={next.url}><span class="ln-dir">Next →</span><span class="ln-title">{MODULES[next.m].short} {next.n} · {next.title}</span></a>
-          : <div class="ln-end" style="text-align:right"><span class="ln-dir">The end</span><span class="ln-title">Course complete 🎉</span></div>}
+          : <div class="ln-end"><span class="ln-dir">The end</span><span class="ln-title">Course complete</span></div>}
       </nav>
       <a class="back-map" href={moduleUrl(m)}><Fragment set:html={ICONS.map} /> All {mm.unit.toLowerCase()}s in {mm.title}</a>
     </article>
@@ -104,7 +104,11 @@ const { Content } = await render(entry);
 
 <script>
   import { isDone, setDone, doneCount } from '../../scripts/progress';
-  import { ICONS } from '../../lib/icons';
+
+  const CHECK =
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="check-path" d="M20 6 9 17l-5-5"/></svg>';
+  const CIRCLE =
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/></svg>';
 
   function initLesson() {
     const wrap = document.getElementById('complete-wrap');
@@ -118,8 +122,8 @@ const { Content } = await render(entry);
       const done = isDone(m, n);
       wrap.classList.toggle('done', done);
       btn.innerHTML = done
-        ? `${ICONS.check} Lesson ${n} complete`
-        : `${ICONS.circle} Mark Lesson ${n} complete`;
+        ? `${CHECK} Lesson ${n} complete`
+        : `${CIRCLE} Mark Lesson ${n} complete`;
       const bar = document.querySelector<HTMLElement>('.lh-progress > i');
       if (bar) bar.style.width = `${Math.round((doneCount(m) / total) * 100)}%`;
     };
