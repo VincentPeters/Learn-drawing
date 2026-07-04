@@ -1,0 +1,11 @@
+---
+import { DIAGRAMS } from '../lib/diagrams';
+
+interface Props {
+  name: string;
+}
+const { name } = Astro.props;
+const svg = DIAGRAMS[name];
+if (!svg) throw new Error(`Unknown diagram: "${name}"`);
+---
+<Fragment set:html={svg} />
