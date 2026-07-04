@@ -1,0 +1,15 @@
+---
+import Base from '../layouts/Base.astro';
+import { lessonUrl } from '../lib/modules';
+---
+<Base title="Page not found — Draft30" description="That page doesn't exist.">
+  <div class="wrap" style="text-align:center; padding: 80px 0;">
+    <div class="eyebrow">404</div>
+    <h1>That sheet isn't in the drawer.</h1>
+    <p class="lead">The page you're after doesn't exist — maybe an old link.</p>
+    <div class="hero-cta" style="justify-content:center;">
+      <a href="/" class="btn btn-primary">Back to the overview</a>
+      <a href={lessonUrl(1, 1)} class="btn btn-ghost">Start Lesson 1</a>
+    </div>
+  </div>
+</Base>
