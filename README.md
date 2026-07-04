@@ -18,7 +18,7 @@ The course is in **two modules**:
 
 | Page | Purpose |
 | --- | --- |
-| `/` | Landing page — *continue where you left off*, the two modules, how a session works, the five phases, the whole-journey roadmap, tools & routine. |
+| `/` | Landing page — *continue where you left off*, the two modules, how a session works, the phases of both modules, the whole-journey roadmap, tools & routine. |
 | `/module-1/`, `/module-2/` | **Course map** for a module: phases as sections, each lesson a card with its goal, completion state, and a highlighted *start here / continue*. Per-phase and overall progress. |
 | `/module-1/lesson-5/`, `/module-2/lesson-3/`, ... | **One page per lesson**: breadcrumb, goal, timed warm-up / main / checkpoint blocks, pro tip, *mark complete*, and prev/next that flow across the whole course (← / → keys). |
 | `/reference/` | A visual cheat-sheet for both modules: line alphabet, orthographic, isometric, dimensioning, sections, plus value, light, and colour — and a glossary. |
@@ -36,7 +36,7 @@ template.
 
 ```
 src/content/lessons/   45 Markdown files (frontmatter + body) — one per lesson
-src/lib/diagrams.ts    ~30 hand-authored, theme-aware SVG diagrams (both modules)
+src/lib/diagrams.ts    34 hand-authored, theme-aware SVG diagrams (both modules)
 src/pages/             Routes: index, module-[m]/, module-[m]/lesson-[n], reference, 404
 src/layouts/           Shared page layout/chrome
 src/components/        Reusable Astro components
@@ -71,7 +71,7 @@ npm run preview    # serve the built site
 
 ## Deploy
 
-Deployed to **Cloudflare Pages**:
+Deploys to **Cloudflare Pages**:
 
 - Build command: `npm run build`
 - Output directory: `dist`
