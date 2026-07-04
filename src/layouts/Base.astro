@@ -1,0 +1,75 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import '../styles/style.css';
+import { lessonUrl, moduleUrl } from '../lib/modules';
+
+interface Props {
+  title: string;
+  description: string;
+  active?: 'home' | 'm1' | 'm2' | 'reference';
+}
+const { title, description, active } = Astro.props;
+---
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='4' fill='%232c5f8a'/%3E%3Cpath d='M5 19 L12 5 L19 19' stroke='white' stroke-width='2' fill='none'/%3E%3Cline x1='7.5' y1='14' x2='16.5' y2='14' stroke='white' stroke-width='1.5'/%3E%3C/svg%3E" />
+    <ClientRouter />
+    <script is:inline>
+      // Apply saved theme before paint; re-apply after view transitions.
+      (function () {
+        function applyTheme() {
+          var t = localStorage.getItem('draft30.theme');
+          if (t) document.documentElement.setAttribute('data-theme', t);
+        }
+        applyTheme();
+        document.addEventListener('astro:after-swap', applyTheme);
+      })();
+    </script>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav">
+        <a class="brand" href="/">
+          <svg class="mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1.5" y="1.5" width="21" height="21" rx="3"/><path d="M6 18 L12 6 L18 18"/><line x1="8.4" y1="13.5" x2="15.6" y2="13.5"/></svg>
+          Draft30 <span class="tag">45 lessons</span>
+        </a>
+        <div class="nav-links">
+          <a href="/" class:list={[{ active: active === 'home' }]}>Overview</a>
+          <a href={moduleUrl(1)} class:list={[{ active: active === 'm1' }]}>Module 1</a>
+          <a href={moduleUrl(2)} class:list={[{ active: active === 'm2' }]}>Module 2</a>
+          <a href="/reference/" class:list={[{ active: active === 'reference' }]}>Reference</a>
+          <a href={lessonUrl(1, 1)} class="nav-cta btn btn-primary" style="padding:7px 14px">Start Lesson 1</a>
+          <button class="theme-toggle" aria-label="Toggle theme"></button>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="wrap footer-grid">
+        <div>
+          <a class="brand" href="/">
+            <svg class="mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1.5" y="1.5" width="21" height="21" rx="3"/><path d="M6 18 L12 6 L18 18"/><line x1="8.4" y1="13.5" x2="15.6" y2="13.5"/></svg>
+            Draft30
+          </a>
+          <div class="footer-note">A companion site for learning technical and engineering drawing.<br>Made to be opened, printed, and drawn along with.</div>
+        </div>
+        <div class="footer-links">
+          <a href="/">Overview</a>
+          <a href={moduleUrl(1)}>Module 1</a>
+          <a href={moduleUrl(2)}>Module 2</a>
+          <a href="/reference/">Reference</a>
+          <a href={lessonUrl(1, 1)}>Start Lesson 1</a>
+        </div>
+      </div>
+    </footer>
+    <script>
+      import '../scripts/enhance';
+    </script>
+  </body>
+</html>
